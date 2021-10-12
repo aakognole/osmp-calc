@@ -1,0 +1,11 @@
+REMARK  STRUCTURE OPTIMIZATION                                                        
+REMARK   DATE:     9/18/19     16:39: 9      CREATED BY USER: akognole                
+ATOM      1  C   MEO     1       0.050   0.005   0.004  1.00  0.00      MEO 
+ATOM      2  DC  MEO     1       0.050   0.005   0.004  1.00  0.00      MEO 
+ATOM      3  O   MEO     1       1.365   0.129   0.106  1.00  0.00      MEO 
+ATOM      4  DO  MEO     1       1.365   0.129   0.106  1.00  0.00      MEO 
+ATOM      5  H1  MEO     1      -0.539  -0.169   0.975  1.00  0.00      MEO 
+ATOM      6  H2  MEO     1      -0.529   0.892  -0.441  1.00  0.00      MEO 
+ATOM      7  H3  MEO     1      -0.347  -0.856  -0.644  1.00  0.00      MEO 
+TER       8      MEO      1
+END

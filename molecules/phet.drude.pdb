@@ -1,0 +1,21 @@
+ATOM      1  C1  PHET    1       1.045  -1.379   0.000  1.00  0.00      SOLU
+ATOM      2  DC1 PHET    1       1.015  -1.359   0.000  1.00  0.00      SOLU
+ATOM      3  H1  PHET    1       1.953  -1.981   0.000  1.00  0.00      SOLU
+ATOM      4  C11 PHET    1      -0.223  -1.977   0.000  1.00  0.00      SOLU
+ATOM      5 DC11 PHET    1      -0.193  -2.015   0.000  1.00  0.00      SOLU
+ATOM      6  H11 PHET    1      -0.303  -3.068   0.000  1.00  0.00      SOLU
+ATOM      7  C12 PHET    1       1.102   0.022   0.000  1.00  0.00      SOLU
+ATOM      8 DC12 PHET    1       1.149   0.008   0.000  1.00  0.00      SOLU
+ATOM      9  H12 PHET    1       2.076   0.520   0.000  1.00  0.00      SOLU
+ATOM     10  C21 PHET    1      -1.387  -1.214   0.000  1.00  0.00      SOLU
+ATOM     11 DC21 PHET    1      -1.398  -1.228   0.000  1.00  0.00      SOLU
+ATOM     12  H21 PHET    1      -2.364  -1.700   0.000  1.00  0.00      SOLU
+ATOM     13  C22 PHET    1      -0.053   0.797   0.000  1.00  0.00      SOLU
+ATOM     14 DC22 PHET    1      -0.045   0.813   0.000  1.00  0.00      SOLU
+ATOM     15  H22 PHET    1       0.014   1.886   0.000  1.00  0.00      SOLU
+ATOM     16  C3  PHET    1      -1.383   0.231   0.000  1.00  0.00      SOLU
+ATOM     17  DC3 PHET    1      -1.360   0.216   0.000  1.00  0.00      SOLU
+ATOM     18  O3  PHET    1      -2.446   0.936   0.000  1.00  0.00      SOLU
+ATOM     19  DO3 PHET    1      -2.453   0.940   0.000  1.00  0.00      SOLU
+TER
+END

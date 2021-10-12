@@ -1,0 +1,869 @@
+ Parameter: ION <- "MG"
+ Parameter: MOL <- "DMP"
+ Parameter: CONC <- "0.5"
+1
+                 Chemistry at HARvard Macromolecular Mechanics
+           (CHARMM) - Developmental Version 44b2   February 15, 2020            
+                                Revision unknown                                
+       Copyright(c) 1984-2014  President and Fellows of Harvard College
+                              All Rights Reserved
+       Current operating system: Linux-4.9.0-11-amd64(x86_64)@n002[+  7]        
+                 Created on  6/14/21 at 12:42:23 by user: akognole    
+
+            Maximum number of ATOMS:    360720, and RESidues:      120240
+ RDTITL> * MINIMIZE DRUDE PARTICLES
+ RDTITL> *
+  
+ CHARMM>     
+  
+ CHARMM>    dimension maxres 2000000 maxaim 12000000 maxgrp 2000000
+Size      Original         New
+MAXA        360720      360720
+MAXB        360720      360720
+MAXT        721440      721440
+MAXP       1082160     1082160
+MAXIMP      180360      180360
+MAXNB        90180       90180
+MAXPAD      360720      360720
+MAXRES      120240     2000000
+MAXSEG       45090       45090
+MAXATC        1400
+MAXCB         3000
+MAXCT        50000
+MAXCP        20000
+MAXCI         1200
+MAXCH         6400
+MAXCN       502503
+MAXCRT      120240      120240
+  
+ CHARMM>     
+  
+ CHARMM>    ! Read topology and parameter files
+ CHARMM>    set toppar ../toppar_drude
+ Parameter: TOPPAR <- "../TOPPAR_DRUDE"
+  
+ CHARMM>    stream @toppar/toppar_drude_master_protein_2020b.str
+ Parameter: TOPPAR -> "../TOPPAR_DRUDE"
+ VOPEN> Attempting to open::../toppar_drude/toppar_drude_master_protein_2020b.str::
+ OPNLGU> Unit 99 opened for READONLY access to ../toppar_drude/toppar_drude_master_protein_2020b.str
+
+                    INPUT STREAM SWITCHING TO UNIT    99
+ RDTITL> * DRUDE MASTER TOPOLOGY AND PARAMETER STREAM FILE
+ RDTITL> * INCLUDES WATER, 2013
+ RDTITL> * IONS UPDATED, JUNE 2018
+ RDTITL> * NUCLEIC ACID/CARBOHYDRATE/LIPID UPDATE JANUARY 2017
+ RDTITL> * OPT MOLECULAR IONS, FYLIN 2018
+ RDTITL> * HALOGEN AND NBFIX TERMS, FYLIN 2018
+ RDTITL> * UPDATED PROTEIN FF WITH OPT ALPHA/THOLE, FYLIN 2018
+ RDTITL> *
+ Parameter: IN1 <- "" <empty>
+  
+ CHARMM>     
+  
+ CHARMM>    ioformat extended
+ MISCOM> Expanded I/O format is used.
+  
+ CHARMM>     
+  
+ CHARMM>    !This file must be streamed prior to additional Drude FF toppar stream files
+ CHARMM>    !and it includes parameters for the model compounds (toppar_drude_model*.str)
+ CHARMM>     
+  
+ CHARMM>    !references
+ CHARMM>    !
+ CHARMM>    !Proteins
+ CHARMM>    !Lopes, P.E.M., Huang, J., Shim, J., Luo, Y., Li, H., Roux, B., and
+ CHARMM>    !MacKerell, A.D., Jr., "Polarizable Force Field for Peptides and
+ CHARMM>    !Proteins based on the Classical Drude Oscillator," Journal of
+ CHARMM>    !Chemical Theory and Computation, 9: 5430-5449, 2013 DOI:
+ CHARMM>    !10.1021/ct400781b, NIHMS53671
+ CHARMM>    !
+ CHARMM>    !water
+ CHARMM>    !SWM4-NDP, negative Drude (this will be the default model): Lamoureux,
+ CHARMM>    !G., Harder, E., Vorobyov, I.V., Deng, Y., Roux, B. MacKerell, A.D.,
+ CHARMM>    !Jr., A polarizable model of water for molecular dynamics simulations
+ CHARMM>    !of biomolecules, Chemical Physics Letters, 2006, 418: 245-249.
+ CHARMM>    !
+ CHARMM>    !SWM6: Wenbo Yu, Pedro E. M. Lopes, Benoit Roux and Alexander
+ CHARMM>    !D. MacKerell, Jr.  "Six-site Polarizable Model of Water Based on the
+ CHARMM>    !Classical Drude Oscillator" Journal of Chemical Physics, 138: 034508,
+ CHARMM>    !2013
+ CHARMM>     
+  
+ CHARMM>    !atomic ions
+ CHARMM>    !Yu, H., Whitfield, T.W., Harder, E., Lamoureux, G., Vorobyov, I.,
+ CHARMM>    !Anisimov, V. M., MacKerell, A.D., Jr., and Roux, B. "Simulating
+ CHARMM>    !Monovalent and Divalent Ions in Aqueous Solution Using a Drude
+ CHARMM>    !Polarizable Force Field," Journal of Chemical Theory and Computation,
+ CHARMM>    !6: 774-786, 2010
+ CHARMM>    !
+ CHARMM>    !Luo, Y., Jiang, W., Yu, H., MacKerell, A.D., Jr., and Roux, B.,
+ CHARMM>    !"Simulation study of ion pairing in concentrated aqueous salt
+ CHARMM>    !solutions with a polarizable force field," Faraday Discussions, 160,
+ CHARMM>    !135-149, 2013, PMC3695446
+ CHARMM>    !
+ CHARMM>    !Lemkul, J.A. and MacKerell, A.D., Jr. "Balancing the Interactions of
+ CHARMM>    !Mg2+ in Aqueous Solution and with Nucleic Acid Moieties For a Polarizable
+ CHARMM>    !Force Field Based on the Classical Drude Oscillator Model," J. Phys. Chem B,
+ CHARMM>    !120, 11436-11448, 2016, PMC5148688
+ CHARMM>     
+  
+ CHARMM>    ! note use of D for second character to indicate Drude
+ CHARMM>    ! polarizable FF (be careful of Cadmium: use CDM)
+ CHARMM>     
+  
+ CHARMM>    ! Parameter labeling after !
+ CHARMM>    ! RESName, generic compound name of model compound followed by additional comments
+ CHARMM>    ! for example ! BENZ, benzene, based on crystal survey data
+ CHARMM>     
+  
+ CHARMM>    !Formatting information
+ CHARMM>    !RTF section: please use the following format for future residues, including the spacing
+ CHARMM>    !(and please clean a few up of the residues not in this format if you so desire....)
+ CHARMM>     
+  
+ CHARMM>    !RESI ALA           0.000
+ CHARMM>    !ATOM N    ND2A2   -0.427  ALPHA -1.056  THOLE 0.711
+ CHARMM>    !BOND A1     A2     A3     A4     A5     A6     A7     A8
+ CHARMM>    !IMPR A1     A2     A3     A4
+ CHARMM>    !CMAP A1     A2     A3     A4     A1     A2     A3     A4
+ CHARMM>    !LONEPAIR relative A1       A2       A3      A4       distance 0.30 angle 91.00 dihe 180.00
+ CHARMM>    !ANISOTROPY        A1       A2       A3      A4       A11 0.6968  A22 1.2194
+ CHARMM>    !IC A1     A2     A3     A4       1.3474  124.31  180.00  114.26   0.9979
+ CHARMM>     
+  
+ CHARMM>    !parameter section
+ CHARMM>    !bond
+ CHARMM>    !CD32E    OD30A    360.00      1.415 ! comment
+ CHARMM>    !angles
+ CHARMM>    !HDA1A    CD31A    CD31A     34.50    110.10 ! comment
+ CHARMM>    !HDA1A    CD31A    CD31A     34.50    110.10   22.53   2.1790 ! comment
+ CHARMM>    !dihedrals
+ CHARMM>    !CD2O1A   ND2A2    CD31C    CD2O2A      0.000   3   180.00 ! comment
+ CHARMM>    !impropers
+ CHARMM>    !CD2O1A   CD31A    ND2A2    OD2C1A    120.000   0     0.00 ! comment
+ CHARMM>    !nonbond (LJ)
+ CHARMM>    !HDW      0.0   -0.0000     0.0000 ! comment
+ CHARMM>    !nbfix
+ CHARMM>    !CD30A   ODW    -0.00500	 4.04699 ! comment
+ CHARMM>     
+  
+ CHARMM>    !ioformat extended
+ CHARMM>     
+  
+ CHARMM>    read rtf card !append
+ MAINIO> Residue topology file being read from unit  99.
+ RDTITL> * TOPOLOGY FOR DRUDE WATER, IONS AND PROTEINS
+ RDTITL> *
+
+ DRUDES PARTICLES WILL BE GENERATED AUTOMATICALLY FOR ALL ATOMS WITH NON-ZERO ALPHA
+ Thole-type dipole screening, Slater-Delta shape {S(u) = 1 - (1+u/2)*exp(-u)}, default radius =  1.300000
+  
+ CHARMM>     
+  
+ CHARMM>    read para card !append
+
+          PARAMETER FILE BEING READ FROM UNIT 99
+ RDTITL> * DRUDE POLARIZABLE FF PARAMETERS
+ RDTITL> *
+
+ PARRDR> WARNING: ATOMS IN BOND X        DRUD      500.00000   0.00000 DONT EXIST
+ PARMIO> NONBOND, HBOND lists and IMAGE atoms cleared.
+  
+ CHARMM>     
+  
+ VCLOSE: Closing unit   99 with status "KEEP"
+
+                    RETURNING TO INPUT STREAM     5
+  
+ CHARMM>    stream @toppar/toppar_drude_nucleic_acid_2020b.str
+ Parameter: TOPPAR -> "../TOPPAR_DRUDE"
+ VOPEN> Attempting to open::../toppar_drude/toppar_drude_nucleic_acid_2020b.str::
+ OPNLGU> Unit 99 opened for READONLY access to ../toppar_drude/toppar_drude_nucleic_acid_2020b.str
+
+                    INPUT STREAM SWITCHING TO UNIT    99
+ RDTITL> * DRUDE TOPOLOGY AND PARAMETER STREAM FILE
+ RDTITL> * NUCLEIC ACIDS
+ RDTITL> *
+ Parameter: IN1 <- "" <empty>
+  
+ CHARMM>     
+  
+ CHARMM>    !requires toppar_drude_master*.str
+ CHARMM>     
+  
+ CHARMM>    !nucleic acids
+ CHARMM>     
+  
+ CHARMM>    !references
+ CHARMM>    !
+ CHARMM>    !Lemkul, J.A. and MacKerell, A.D., Jr., "Polarizable Force Field for
+ CHARMM>    !DNA Based on the Classical Drude Oscillator: I. Refinement using
+ CHARMM>    !Quantum Mechanical Base Stacking and Conformational Energetics,"
+ CHARMM>    !J. Chem. Theory Comput., 13; 2053-2071, 2017, DOI: 10.1021/acs.jctc.7b00067
+ CHARMM>    !
+ CHARMM>    !Lemkul, J.A. and MacKerell, A.D., Jr., "Polarizable Force Field for
+ CHARMM>    !DNA Based on the Classical Drude Oscillator: II. Microsecond Molecular
+ CHARMM>    !Dynamics Simulations of Duplex DNA," J. Chem. Theory Comput.,
+ CHARMM>    !13; 2072-2085, 2017, DOI: 10.1021/acs.jctc.7b00068
+ CHARMM>    !
+ CHARMM>    !Savelyev, A. and MacKerell, A.D., Jr., "All-Atom Polarizable Force
+ CHARMM>    !Field for DNA Based on the Classical Drude Oscillator Model," Journal
+ CHARMM>    !of Computational Chemistry, 35; 1219-1239, 2014, DOI: 10.1002/jcc.23611,
+ CHARMM>    !NIHMSID #585697
+ CHARMM>    !
+ CHARMM>    !RNA
+ CHARMM>    !Lemkul, J.A. and MacKerell, A.D., Jr., "Polarizable Force Field for
+ CHARMM>    !RNA Based on the Classical Drude Oscillator," J. Comput. Chem.,
+ CHARMM>    !39, 2624–2646, 2018, DOI: 10.1002/jcc.25709, NIHMSID #990779
+ CHARMM>    !
+ CHARMM>    !Nucleic Acid Bases
+ CHARMM>    !Baker, C.M., Anisimov, V.M., and MacKerell, A.D., Jr., "Development of
+ CHARMM>    !CHARMM Polarizable Force Field for Nucleic Acid Bases Based on the
+ CHARMM>    !Classical Drude Oscillator Model," Journal of Physical Chemistry B,
+ CHARMM>    !115; 580-596, 2011, PMC3166616
+ CHARMM>    !
+ CHARMM>     
+  
+ CHARMM>    read rtf card append
+ MAINIO> Residue topology file being read from unit  99.
+ RDTITL> * TOPOLOGY FOR DRUDE NUCLEIC ACIDS
+ RDTITL> *
+
+ DRUDES PARTICLES WILL BE GENERATED AUTOMATICALLY FOR ALL ATOMS WITH NON-ZERO ALPHA
+ Thole-type dipole screening, Slater-Delta shape {S(u) = 1 - (1+u/2)*exp(-u)}, default radius =  1.300000
+  
+ CHARMM>     
+  
+ CHARMM>    read para card append
+
+          PARAMETER FILE BEING READ FROM UNIT 99
+ RDTITL> * DRUDE POLARIZABLE FF PARAMETERS
+ RDTITL> *
+ PARMIO> NONBOND, HBOND lists and IMAGE atoms cleared.
+  
+ VCLOSE: Closing unit   99 with status "KEEP"
+
+                    RETURNING TO INPUT STREAM     5
+  
+ CHARMM>    stream @toppar/toppar_drude_lipid_2020b.str
+ Parameter: TOPPAR -> "../TOPPAR_DRUDE"
+ VOPEN> Attempting to open::../toppar_drude/toppar_drude_lipid_2020b.str::
+ OPNLGU> Unit 99 opened for READONLY access to ../toppar_drude/toppar_drude_lipid_2020b.str
+
+                    INPUT STREAM SWITCHING TO UNIT    99
+ RDTITL> * DRUDE TOPOLOGY AND PARAMETER STREAM FILE FOR LIPIDS
+ RDTITL> *
+ Parameter: IN1 <- "" <empty>
+  
+ CHARMM>     
+  
+ CHARMM>    !requires toppar_drude_master*.str
+ CHARMM>     
+  
+ CHARMM>    !ioformat extended
+ CHARMM>     
+  
+ CHARMM>    !lipids
+ CHARMM>     
+  
+ CHARMM>    !The following dihedral parameter is commented out below.
+ CHARMM>    !For lipid simulations comment out this term below and
+ CHARMM>    !comment the corresponding parameter in the master_protein
+ CHARMM>    !toppar file.  Use of the following parameters with proteins
+ CHARMM>    !will alter the conformational sampling of Lys sidechains
+ CHARMM>    !
+ CHARMM>    !1,2,3 fold terms differ from master file
+ CHARMM>    !currently these parameters are being used as the default, although this impacts the long
+ CHARMM>    !chain aliphatics and Lys sidechain in proteins.
+ CHARMM>    !
+ CHARMM>    !CD32A    CD32A    CD32A    CD32A       0.005    1   180.00 ! HEXA/HEPT, Hui-2015 protein: 0.073    1     0.00
+ CHARMM>    !CD32A    CD32A    CD32A    CD32A       0.104    2     0.00 ! HEXA/HEPT, Hui-2015          0.043    2     0.00
+ CHARMM>    !CD32A    CD32A    CD32A    CD32A       0.058    3   180.00 ! HEXA/HEPT, Hui-2015          0.119    3   180.00
+ CHARMM>    !CD32A    CD32A    CD32A    CD32A       0.098    4     0.00 ! HEXA/HEPT, Hui-2015          0.098    4     0.00
+ CHARMM>    !CD32A    CD32A    CD32A    CD32A       0.046    5     0.00 ! HEXA/HEPT, Hui-2015          0.046    5     0.00
+ CHARMM>     
+  
+ CHARMM>    !references
+ CHARMM>    !
+ CHARMM>    !Li, H., Chowdhary, J., Huang, L., He, X, MacKerell, A.D., Jr., and
+ CHARMM>    !Roux, B, "Drude Polarizable Force Field for Molecular Dynamics
+ CHARMM>    !Simulations of Saturated and Unsaturated Zwitterionic Lipids,"
+ CHARMM>    !In preparation, 2017.
+ CHARMM>    !
+ CHARMM>    !
+ CHARMM>    !Chowdhary, J., Harder, E., Lopes, P.E.M., MacKerell, Jr., A.D, and
+ CHARMM>    !Roux, B., “A Polarizable Model for Phosphatidylcholine-Containing
+ CHARMM>    !Biological Membranes,” Journal of Physical Chemistry, B.,117:
+ CHARMM>    !9142-9160, 2013.
+ CHARMM>     
+  
+ CHARMM>    read rtf card append
+ MAINIO> Residue topology file being read from unit  99.
+ RDTITL> * TOPOLOGY FOR DRUDE LIPIDS
+ RDTITL> *
+
+ DRUDES PARTICLES WILL BE GENERATED AUTOMATICALLY FOR ALL ATOMS WITH NON-ZERO ALPHA
+ Thole-type dipole screening, Slater-Delta shape {S(u) = 1 - (1+u/2)*exp(-u)}, default radius =  1.300000
+  
+ CHARMM>     
+  
+ CHARMM>    read para card append
+
+          PARAMETER FILE BEING READ FROM UNIT 99
+ RDTITL> * DRUDE POLARIZABLE FF PARAMETERS
+ RDTITL> *
+ PARMIO> NONBOND, HBOND lists and IMAGE atoms cleared.
+  
+ VCLOSE: Closing unit   99 with status "KEEP"
+
+                    RETURNING TO INPUT STREAM     5
+  
+ CHARMM>    !stream @toppar/toppar_drude_carbohydrate_2020b.str
+ CHARMM>    stream @toppar/toppar_drude_model_2020b.str
+ Parameter: TOPPAR -> "../TOPPAR_DRUDE"
+ VOPEN> Attempting to open::../toppar_drude/toppar_drude_model_2020b.str::
+ OPNLGU> Unit 99 opened for READONLY access to ../toppar_drude/toppar_drude_model_2020b.str
+
+                    INPUT STREAM SWITCHING TO UNIT    99
+ RDTITL> * DRUDE TOPOLOGY AND PARAMETER STREAM FILE FOR SMALL MODEL COMPOUNDS
+ RDTITL> *
+ Parameter: IN1 <- "" <empty>
+  
+ CHARMM>     
+  
+ CHARMM>    !requires toppar_drude_master*.str
+ CHARMM>     
+  
+ CHARMM>    !model compounds
+ CHARMM>     
+  
+ CHARMM>    !references
+ CHARMM>    !Alkanes
+ CHARMM>    !Igor V. Vorobyov, Victor M. Anisimov and Alexander D. MacKerell,
+ CHARMM>    !Jr. "Polarizable Empirical Force Field for Alkanes Based on the
+ CHARMM>    !Classical Drude Oscillator Model," Journal of Physical Chemistry B,
+ CHARMM>    !109: 18988-18999, 2005.
+ CHARMM>    !
+ CHARMM>    !Anisotropic polarizability model
+ CHARMM>    !Harder, E., Anisimov, V.M., Vorobyov, I.V., Lopes, P.E., Noskov, S.,
+ CHARMM>    !MacKerell, A.D., Jr.  and Roux, B. Atomic Level Anisotropy in the
+ CHARMM>    !Electrostatic Modeling of Lone Pairs for a Polarizable Force Field
+ CHARMM>    !based on the Classical Drude Oscillator, Journal of Chemical Theory
+ CHARMM>    !and Computation, 2: 1587-1597, 2006
+ CHARMM>    !
+ CHARMM>    !Ethers
+ CHARMM>    !
+ CHARMM>    !Vorobyov, I.V., Anisimov, V.M., Greene, S., Venable, R.M., Moser, A.,
+ CHARMM>    !Pastor, R.W. and MacKerell, A.D., Jr., Additive and Classical Drude
+ CHARMM>    !Polarizable Force Fields for Linear and Cyclic Ethers, Journal of
+ CHARMM>    !Chemical Theory and Computation, 3: 1120-1133, 2007.
+ CHARMM>    !
+ CHARMM>    !Baker, C. and MacKerell, Jr. A.D., “Polarizability Rescaling and
+ CHARMM>    !atom-based Thole Scaling in the CHARMM Drude Polarizable Force Field
+ CHARMM>    !for Ethers” Journal of Molecular Modeling, 16: 567-576, 2010,
+ CHARMM>    !PMC2818097
+ CHARMM>     
+  
+ CHARMM>    !Sulfur containing compounds
+ CHARMM>    !Zhu, X. and MacKerell, A.D., Jr. “Polarizable Empirical Force Field
+ CHARMM>    !for Sulfur-Containing Compounds Based on the Classical Drude
+ CHARMM>    !Oscillator Model,” Journal of Computational Chemistry, 12: 2330-2341,
+ CHARMM>    !2010. PMC2923574
+ CHARMM>    !
+ CHARMM>    !Alcohols
+ CHARMM>    !Anisimov, V.M., Vorobyov, I.V., Roux, B., and MacKerell, A.D., Jr.
+ CHARMM>    !Polarizable empirical force field for the primary and secondary
+ CHARMM>    !alcohol series based on the classical Drude model. Journal of Chemical
+ CHARMM>    !Theory and Computation, 3, 1927-1946, 2007.
+ CHARMM>     
+  
+ CHARMM>    !Amides
+ CHARMM>    !Harder, E., Anisimov, V.M., Whitfield, T., MacKerell, A.D., Jr., Roux,
+ CHARMM>    !B. "Understanding the Dielectric Properties of Liquid Amides from a
+ CHARMM>    !Polarizable Force Field," Journal of Physical Chemistry,
+ CHARMM>    !112:3509-3521. 2008, PMID: 18302362
+ CHARMM>    !
+ CHARMM>    !Final amide model used on 2013 protein FF
+ CHARMM>    !Lin, B., Lopes, P.E.M., Roux, B., and MacKerell, A.D., Jr.,
+ CHARMM>    !“Kirkwood-Buff Analysis of Aqueous N-Methylacetamide and Acetamide
+ CHARMM>    !Solutions Modeled by the CHARMM Additive and Drude Polarizable Force
+ CHARMM>    !Fields,” Journal of Chemical Physics, 139: 084509, 2013, PMC3772949
+ CHARMM>    !
+ CHARMM>    !Aromatics
+ CHARMM>    !Lopes, P., Lamoureux, G., Roux, B., MacKerell, A.D., Jr., "Polarizable
+ CHARMM>    !Empirical Force Field for Aromatic Compounds Based on the Classical
+ CHARMM>    !Drude Oscillator," Journal of Physical Chemistry, B. 111:2873-2885,
+ CHARMM>    !2007
+ CHARMM>    !
+ CHARMM>    !Heterocycles
+ CHARMM>    !Lopes, P.E.M., Lamoureux, G., MacKerell, A.D., Jr., “Polarizable
+ CHARMM>    !Empirical Force Field for Nitrogen-containing Heteroaromatic Compounds
+ CHARMM>    !Based on the Classical Drude Oscillator” Journal of Computational
+ CHARMM>    !Chemistry, 30: 1821-1838, 2009, PMC251901
+ CHARMM>    !
+ CHARMM>    !Nucleic Acid Bases
+ CHARMM>    !Baker, C.M., Anisimov, V.M., and MacKerell, A.D., Jr., “Development of
+ CHARMM>    !CHARMM Polarizable Force Field for Nucleic Acid Bases Based on the
+ CHARMM>    !Classical Drude Oscillator Model,” Journal of Physical Chemistry,
+ CHARMM>    !B. 115; 580–596, 2011, PMC3166616
+ CHARMM>    !
+ CHARMM>    !Halogenated benzenes and ethanes
+ CHARMM>    !Lin, F-Y. and MacKerell, A.D., Jr., “Polarizable Empirical Force Field
+ CHARMM>    !for Halogen-Containing Compounds Based on the Classical Drude
+ CHARMM>    !Oscillator," Journal of Chemical Theory and Computation, 2018, 14 (2),
+ CHARMM>    !1083-1098
+ CHARMM>    !
+ CHARMM>    !Updated Molecular ions
+ CHARMM>    !Lin, F-Y., Lopes, P.E.M., Harder, E., Roux, B., and
+ CHARMM>    !MacKerell, A.D., Jr.,“Polarizable Force Field for Molecular Ions based
+ CHARMM>    !on the Classical Drude Oscillator," Journal of Chemical Information
+ CHARMM>    !and Modeling, 2018, 58 (5), 993–1004.
+ CHARMM>    !
+ CHARMM>    !Reoptimization of DMP and new molecular anions
+ CHARMM>    !Kognole, A.A., Aytenfisu, A.H., and MacKerell, A.D., Jr., “Balanced
+ CHARMM>    !Drude Polarizable Force Field for Molecular Anions: Phosphates,
+ CHARMM>    !Sulfates, Sulfamates and Oxides," Journal of Molecular Modeling,
+ CHARMM>    !(Accepted April 2020)
+ CHARMM>     
+  
+ CHARMM>    read rtf card append
+ MAINIO> Residue topology file being read from unit  99.
+ RDTITL> * TOPOLOGY FOR DRUDE MODEL COMPOUNDS
+ RDTITL> *
+
+ DRUDES PARTICLES WILL BE GENERATED AUTOMATICALLY FOR ALL ATOMS WITH NON-ZERO ALPHA
+ Thole-type dipole screening, Slater-Delta shape {S(u) = 1 - (1+u/2)*exp(-u)}, default radius =  1.300000
+  
+ CHARMM>     
+  
+ CHARMM>    read para card append
+
+          PARAMETER FILE BEING READ FROM UNIT 99
+ RDTITL> * DRUDE POLARIZABLE FF PARAMETERS
+ RDTITL> *
+ PARMIO> NONBOND, HBOND lists and IMAGE atoms cleared.
+  
+ VCLOSE: Closing unit   99 with status "KEEP"
+
+                    RETURNING TO INPUT STREAM     5
+  
+ CHARMM>     
+  
+ CHARMM>    ! Read PSF and Coordinates
+ CHARMM>    open read unit 10 card name ../@ion_@mol_files/@ion_@mol_@conc.psf
+ Parameter: ION -> "MG"
+ Parameter: MOL -> "DMP"
+ Parameter: ION -> "MG"
+ Parameter: MOL -> "DMP"
+ Parameter: CONC -> "0.5"
+ VOPEN> Attempting to open::../mg_dmp_files/mg_dmp_0.5.psf::
+ OPNLGU> Unit 10 opened for READONLY access to ../mg_dmp_files/mg_dmp_0.5.psf
+  
+ CHARMM>    read psf  unit 10 card
+ MAINIO> Protein structure file being read from unit  10.
+ PSFRD2> Reading PSF in the expanded format.
+ TITLE>  * CREATE PSF FILE
+ TITLE>  *  DATE:     6/ 8/21     14:18:47      CREATED BY USER: akognole
+ TITLE>  *
+ PSFSUM> PSF modified: NONBOND lists and IMAGE atoms cleared.
+ PSFSUM> Summary of the structure file counters :
+         Number of segments      =        3   Number of residues   =     7139
+         Number of atoms         =    36559   Number of groups     =     7139
+         Number of bonds         =    36463   Number of angles     =     8323
+         Number of dihedrals     =      768   Number of impropers  =        0
+         Number of cross-terms   =        0
+         Number of HB acceptors  =     7043   Number of HB donors  =        0
+         Number of NB exclusions =        0   Total charge =    0.00000
+         Number of Drudes        =     7523
+         Number of true-bonds    =    36463   Number of zero-bonds =        0
+         Number of aniso. terms  =      256   Number of lone-pairs =     7043
+  
+ CHARMM>     
+  
+ CHARMM>    open read unit 10 card name ../@ion_@mol_files/@ion_@mol_@conc.crd
+ Parameter: ION -> "MG"
+ Parameter: MOL -> "DMP"
+ Parameter: ION -> "MG"
+ Parameter: MOL -> "DMP"
+ Parameter: CONC -> "0.5"
+ OPNLGU> Unit already open. The old file will be closed first.
+ VCLOSE: Closing unit   10 with status "KEEP"
+ VOPEN> Attempting to open::../mg_dmp_files/mg_dmp_0.5.crd::
+ OPNLGU> Unit 10 opened for READONLY access to ../mg_dmp_files/mg_dmp_0.5.crd
+  
+ CHARMM>    read coor unit 10 card
+          SPATIAL COORDINATES BEING READ FROM UNIT 10
+ TITLE> * CHARMM CRD FILE
+ TITLE> * GENERATED BY CONVPDB.PL (MMTSB TOOL SET)
+ TITLE> *
+ ** WARNING ** After reading, there are no coordinates for selected atom:  1346    97 SWM4     DOH2    
+ ** WARNING ** After reading, there are no coordinates for selected atom:  1347    97 SWM4     OM      
+ ** WARNING ** After reading, there are no coordinates for selected atom:  1351    98 SWM4     DOH2    
+ ** WARNING ** After reading, there are no coordinates for selected atom:  1352    98 SWM4     OM      
+ ** WARNING ** After reading, there are no coordinates for selected atom:  1356    99 SWM4     DOH2    
+ ** WARNING ** After reading, there are no coordinates for selected atom:  1357    99 SWM4     OM      
+ ** WARNING ** After reading, there are no coordinates for selected atom:  1361   100 SWM4     DOH2    
+ ** WARNING ** After reading, there are no coordinates for selected atom:  1362   100 SWM4     OM      
+ ** WARNING ** After reading, there are no coordinates for selected atom:  1366   101 SWM4     DOH2    
+ ** WARNING ** After reading, there are no coordinates for selected atom:  1367   101 SWM4     OM      
+
+ ** A total of 14086 selected atoms have no coordinates
+ *** LEVEL  2 WARNING *** BOMLEV IS    0
+  
+ CHARMM>     
+  
+ CHARMM>    coor sdrude
+  
+ CHARMM>    coor shake
+ SELECTED COORDINATES CONSTRAINED IN THE MAIN SET.
+
+  
+ CHARMM>     
+  
+ CHARMM>    SHAKE bonh param nofast -
+ CHARMM>          select  .not. type D*  end -
+ CHARMM>          select  .not. type D*  end
+ SELRPN>  29036 atoms have been selected out of  36559
+ SELRPN>  29036 atoms have been selected out of  36559
+ SHKCOM> SHAKE parameters: TOL =   0.1000D-09 MXITer =    500
+
+           21513 constraints will held by SHAKE.
+  
+ CHARMM>     
+  
+ CHARMM>    SET XTLTYPE  = ORTHO
+ Parameter: XTLTYPE <- "ORTHO"
+  
+ CHARMM>    SET A = 48.5
+ Parameter: A <- "48.5"
+  
+ CHARMM>    SET B = 48.5
+ Parameter: B <- "48.5"
+  
+ CHARMM>    SET C = 96.5
+ Parameter: C <- "96.5"
+  
+ CHARMM>    SET ALPHA = 90.0
+ Parameter: ALPHA <- "90.0"
+  
+ CHARMM>    SET BETA  = 90.0
+ Parameter: BETA <- "90.0"
+  
+ CHARMM>    SET GAMMA = 90.0
+ Parameter: GAMMA <- "90.0"
+  
+ CHARMM>    SET FFTX  = 60
+ Parameter: FFTX <- "60"
+  
+ CHARMM>    SET FFTY  = 60
+ Parameter: FFTY <- "60"
+  
+ CHARMM>    SET FFTZ  = 120
+ Parameter: FFTZ <- "120"
+  
+ CHARMM>    SET XCEN  = 0
+ Parameter: XCEN <- "0"
+  
+ CHARMM>    SET YCEN  = 0
+ Parameter: YCEN <- "0"
+  
+ CHARMM>    SET ZCEN  = 0
+ Parameter: ZCEN <- "0"
+  
+ CHARMM>     
+  
+ CHARMM>    !open read unit 10 card name crystal_image.str
+ CHARMM>    CRYSTAL DEFINE @XTLtype @A @B @C @alpha @beta @gamma
+ Parameter: XTLTYPE -> "ORTHO"
+ Parameter: A -> "48.5"
+ Parameter: B -> "48.5"
+ Parameter: C -> "96.5"
+ Parameter: ALPHA -> "90.0"
+ Parameter: BETA -> "90.0"
+ Parameter: GAMMA -> "90.0"
+ Crystal Parameters : Crystal Type = ORTH
+           A     =   48.50000 B    =   48.50000 C     =   96.50000
+           Alpha =   90.00000 Beta =   90.00000 Gamma =   90.00000
+  
+ CHARMM>    crystal build noper 0 cutoff 16.0
+ XBUILD> Building all transformations with a minimum atom-atom
+         contact distance of less than   16.00 Angstroms.
+
+ Range of Grid Search for Transformation     1 :
+ Lattice Vector A    -2 TO     2
+ Lattice Vector B    -2 TO     2
+ Lattice Vector C    -2 TO     2
+
+
+ The number of transformations generated =    26
+
+
+ Number  Symop   A   B   C   Distance
+
+      1      1  -1  -1  -1     7.4103
+      2      1  -1   0  -1     4.6598
+      3      1  -1   1  -1     6.6375
+      4      1   0  -1  -1     2.7828
+      5      1   0   0  -1     3.3998
+      6      1   0   1  -1     3.1529
+      7      1  -1  -1   0     3.8178
+      8      1  -1   0   0     2.0142
+      9      1  -1   1   0     2.9223
+     10      1   0  -1   0     1.7127
+     11      1   0   1   0     1.7127
+     12      1  -1  -1   1     7.4057
+     13      1  -1   0   1     5.1776
+     14      1  -1   1   1     5.4978
+     15      1   0  -1   1     3.1529
+     16      1   0   0   1     3.3998
+     17      1   0   1   1     2.7828
+     18      1   1   1   1     7.4103
+     19      1   1   0   1     4.6598
+     20      1   1  -1   1     6.6375
+     21      1   1   1   0     3.8178
+     22      1   1   0   0     2.0142
+     23      1   1  -1   0     2.9223
+     24      1   1   1  -1     7.4057
+     25      1   1   0  -1     5.1776
+     26      1   1  -1  -1     5.4978
+                     THERE ARE NO ROTATIONS FOR THIS TRANSFORMATION SET
+    26 Transformations have been processed.
+
+  
+ CHARMM>    !CRYSTAL READ UNIT 10 CARD
+ CHARMM>    !CRYSTAL BUILD CUTOFF 14.0
+ CHARMM>     
+  
+ CHARMM>    !Image centering by residue
+ CHARMM>    IMAGE BYRESID XCEN @xcen YCEN @ycen ZCEN @zcen sele resname @ion .or. resname @mol end
+ Parameter: XCEN -> "0"
+ Parameter: YCEN -> "0"
+ Parameter: ZCEN -> "0"
+ Parameter: ION -> "MG"
+ Parameter: MOL -> "DMP"
+ SELRPN>   1344 atoms have been selected out of  36559
+ IMAGE CENTERING ON FOR SOME ATOMS
+  
+ CHARMM>    IMAGE BYRESID XCEN @xcen YCEN @ycen ZCEN @zcen sele resname swm4 end
+ Parameter: XCEN -> "0"
+ Parameter: YCEN -> "0"
+ Parameter: ZCEN -> "0"
+ SELRPN>  35215 atoms have been selected out of  36559
+ IMAGE CENTERING ON FOR SOME ATOMS
+  
+ CHARMM>     
+  
+ CHARMM>    nbonds atom vatom switch vswitch bycb -
+ CHARMM>           ctonnb 10.0 ctofnb 12.0 cutnb 16.0 cutim 16.0 -
+ CHARMM>           inbfrq -1 imgfrq -1 wmin 1.0 cdie eps 1.0 -
+ CHARMM>           ewald pmew fftx @fftx ffty @ffty fftz @fftz  kappa .34 spline order 6
+ Parameter: FFTX -> "60"
+ Parameter: FFTY -> "60"
+ Parameter: FFTZ -> "120"
+
+ SELECTED IMAGES ATOMS BEING CENTERED ABOUT  0.000000  0.000000  0.000000
+
+ <MKIMAT2>: updating the image atom lists and remapping
+ Transformation   Atoms  Groups  Residues  Min-Distance
+    1  C001 has     225      45      45        5.89
+    2  C002 has    1390     278     278        0.99
+    3  C003 has     235      47      47        3.53
+    4  C004 has    1280     256     256        0.98
+    5  C005 has    5870    1174    1174        0.70
+    6  C006 has    1415     283     283        1.11
+    7  C007 has    2535     498     498        0.96
+    8  C008 has   11817    2319    2319        0.61
+    9  C009 has    2701     533     533        0.91
+   10  C010 has   11717    2275    2275        0.59
+   12  C012 has     175      35      35        4.02
+   13  C013 has    1400     280     280        1.25
+   14  C014 has     265      53      53        4.28
+ Total of77584 atoms and15215 groups and15215 residues were included
+
+ <PME> Total heap storage needed =     1525647
+ Fill Ewald table: Number of points=     10000 EWXmax=    4.250000
+ fill erfc table: linear inter has rms error = 0.979220D-08 maximum error = 0.218740D-07
+ fill erfc table: cubic spline has rms error = 0.360331D-11 maximum error = 0.108438D-10
+
+ NONBOND OPTION FLAGS: 
+     ELEC     VDW      ATOMs    CDIElec  SWITch   VATOm    VSWItch 
+     BYCB     NOEXtnd  EWALd   
+ CUTNB  = 16.000 CTEXNB =999.000 CTONNB = 10.000 CTOFNB = 12.000
+ CGONNB =  0.000 CGOFNB = 10.000
+ WMIN   =  1.000 WRNMXD =  0.500 E14FAC =  1.000 EPS    =  1.000
+ NBXMOD =      5
+ PME EWALD OPTIONS: KAPPA  =  0.340  QCOR =  0.000  Bspline order = 6
+ FFTX=  60  FFTY=  60  FFTZ= 120
+                Using FFTW
+                Real-to-Complex FFT
+                Using Column FFT 
+ There are        0 atom  pairs and        0 atom  exclusions.
+ There are        0 group pairs and        0 group exclusions.
+ <MAKINB> with mode   5 found  76414 exclusions and   2304 interactions(1-4)
+ <MAKGRP> found      0 group exclusions.
+ <MAKGRP> found      0 image group exclusions.
+ Generating nonbond list with Exclusion mode = 5
+ Allocate space for   5000 Thole shielding pairs 
+ == PRIMARY == SPACE FOR        0 ATOM PAIRS AND        0 GROUP PAIRS
+ == IMAGES === SPACE FOR        0 ATOM PAIRS AND        0 GROUP PAIRS
+  
+ =========================================
+              TRIAL run of list...........
+ =========================================
+Using Image CUBE search
+Using Image CUBE search
+  NBNDGCM found:
+     4671849  atom pairs
+     1807053  image atom pairs
+           0  self atom pairs
+    38108672 total atom  pairs
+    12612886 total image pairs
+  
+ CHARMM>     
+  
+ CHARMM>    energy
+
+ SELECTED IMAGES ATOMS BEING CENTERED ABOUT  0.000000  0.000000  0.000000
+
+ <MKIMAT2>: updating the image atom lists and remapping
+ Transformation   Atoms  Groups  Residues  Min-Distance
+    1  C001 has     225      45      45        5.89
+    2  C002 has    1390     278     278        0.99
+    3  C003 has     235      47      47        3.53
+    4  C004 has    1280     256     256        0.98
+    5  C005 has    5870    1174    1174        0.70
+    6  C006 has    1415     283     283        1.11
+    7  C007 has    2535     498     498        0.96
+    8  C008 has   11817    2319    2319        0.61
+    9  C009 has    2701     533     533        0.91
+   10  C010 has   11717    2275    2275        0.59
+   12  C012 has     175      35      35        4.02
+   13  C013 has    1400     280     280        1.25
+   14  C014 has     265      53      53        4.28
+ Total of77584 atoms and15215 groups and15215 residues were included
+
+ <MAKGRP> found      0 image group exclusions.
+ <PME> Total heap storage needed =     1525647
+
+ NONBOND OPTION FLAGS: 
+     ELEC     VDW      ATOMs    CDIElec  SWITch   VATOm    VSWItch 
+     BYCB     NOEXtnd  EWALd   
+ CUTNB  = 16.000 CTEXNB =999.000 CTONNB = 10.000 CTOFNB = 12.000
+ CGONNB =  0.000 CGOFNB = 10.000
+ WMIN   =  1.000 WRNMXD =  0.500 E14FAC =  1.000 EPS    =  1.000
+ NBXMOD =      5
+ PME EWALD OPTIONS: KAPPA  =  0.340  QCOR =  0.000  Bspline order = 6
+ FFTX=  60  FFTY=  60  FFTZ= 120
+                Using FFTW
+                Real-to-Complex FFT
+                Using Column FFT 
+ There are  4671849 atom  pairs and    78718 atom  exclusions.
+ There are        0 group pairs and        0 group exclusions.
+ Generating nonbond list with Exclusion mode = 5
+ == PRIMARY == SPACE FOR  6073403 ATOM PAIRS AND        0 GROUP PAIRS
+ == IMAGES === SPACE FOR  2349168 ATOM PAIRS AND        0 GROUP PAIRS
+Using Image CUBE search
+  NBNDGCM found:
+     4671849  atom pairs
+     1807053  image atom pairs
+           0  self atom pairs
+    38108672 total atom  pairs
+    12612886 total image pairs
+Splitting recip cores into (y by z):   2 by    4
+ENER ENR:  Eval#     ENERgy      Delta-E         GRMS
+ENER INTERN:          BONDs       ANGLes       UREY-b    DIHEdrals    IMPRopers
+ENER EXTERN:        VDWaals         ELEC       HBONds          ASP         USER
+ENER IMAGES:        IMNBvdw       IMELec       IMHBnd       RXNField    EXTElec
+ENER EWALD:          EWKSum       EWSElf       EWEXcl       EWQCor       EWUTil
+ ----------       ---------    ---------    ---------    ---------    ---------
+ENER>        0 3142705.5334       0.0000   56303.1256
+ENER INTERN>       31.03509    328.81518      0.05461    892.89736      0.00000
+ENER EXTERN>    45292.43857    297.66260      0.00000      0.00000      0.00000
+ENER IMAGES>   3103058.6040    -102.6190       0.0000       0.0000       0.0000
+ENER EWALD>      16586.2674-3687919.7545 3664240.1321       0.0000       0.0000
+ ----------       ---------    ---------    ---------    ---------    ---------
+  
+ CHARMM>     
+  
+ CHARMM>    ! first minimize drudes, then entire system
+ CHARMM>    cons harm force 100000. sele .not. type D* end
+ SELRPN>  29036 atoms have been selected out of  36559
+ CSTRAN: Harmonic Restraints
+          ABSOlute type as set number  1.  Number of selected atoms:  29036
+          Reference coordinates set to main coordinates.
+          Mass weighting will NOT be used for new restraints.
+          The force constant of  100000.00000 will be used.
+          An exponent of  2 will be used.
+          The XYZ scale factors are:       1.00000       1.00000       1.00000
+          A total of  29036 atoms are restrained.
+  
+ CHARMM>    mini SD   nstep 100 nprint 20
+
+ SELECTED IMAGES ATOMS BEING CENTERED ABOUT  0.000000  0.000000  0.000000
+
+ <MKIMAT2>: updating the image atom lists and remapping
+ Transformation   Atoms  Groups  Residues  Min-Distance
+    1  C001 has     225      45      45        5.89
+    2  C002 has    1390     278     278        0.99
+    3  C003 has     235      47      47        3.53
+    4  C004 has    1280     256     256        0.98
+    5  C005 has    5870    1174    1174        0.70
+    6  C006 has    1415     283     283        1.11
+    7  C007 has    2535     498     498        0.96
+    8  C008 has   11817    2319    2319        0.61
+    9  C009 has    2701     533     533        0.91
+   10  C010 has   11717    2275    2275        0.59
+   12  C012 has     175      35      35        4.02
+   13  C013 has    1400     280     280        1.25
+   14  C014 has     265      53      53        4.28
+ Total of77584 atoms and15215 groups and15215 residues were included
+
+ <MAKGRP> found      0 image group exclusions.
+
+ NONBOND OPTION FLAGS: 
+     ELEC     VDW      ATOMs    CDIElec  SWITch   VATOm    VSWItch 
+     BYCB     NOEXtnd  EWALd   
+ CUTNB  = 16.000 CTEXNB =999.000 CTONNB = 10.000 CTOFNB = 12.000
+ CGONNB =  0.000 CGOFNB = 10.000
+ WMIN   =  1.000 WRNMXD =  0.500 E14FAC =  1.000 EPS    =  1.000
+ NBXMOD =      5
+ PME EWALD OPTIONS: KAPPA  =  0.340  QCOR =  0.000  Bspline order = 6
+ FFTX=  60  FFTY=  60  FFTZ= 120
+                Using FFTW
+                Real-to-Complex FFT
+                Using Column FFT 
+ There are  4671849 atom  pairs and    78718 atom  exclusions.
+ There are        0 group pairs and        0 group exclusions.
+ Generating nonbond list with Exclusion mode = 5
+ == PRIMARY == SPACE FOR  6073403 ATOM PAIRS AND        0 GROUP PAIRS
+ == IMAGES === SPACE FOR  2349168 ATOM PAIRS AND        0 GROUP PAIRS
+Using Image CUBE search
+  NBNDGCM found:
+     4671849  atom pairs
+     1807053  image atom pairs
+           0  self atom pairs
+    38108672 total atom  pairs
+    12612886 total image pairs
+
+
+ STEEPD> An energy minimization has been requested.
+
+ NSTEP  =          100   NPRINT =           20
+ STEP   =    0.0200000   TOLFUN =    0.0000000
+ TOLGRD =    0.0000000   TOLSTP =    0.0000000
+
+MINI MIN: Cycle      ENERgy      Delta-E         GRMS    Step-size
+MINI INTERN:          BONDs       ANGLes       UREY-b    DIHEdrals    IMPRopers
+MINI EXTERN:        VDWaals         ELEC       HBONds          ASP         USER
+MINI IMAGES:        IMNBvdw       IMELec       IMHBnd       RXNField    EXTElec
+MINI EWALD:          EWKSum       EWSElf       EWEXcl       EWQCor       EWUTil
+MINI CONSTR:       HARMonic    CDIHedral          CIC     RESDistance       NOE
+ ----------       ---------    ---------    ---------    ---------    ---------
+MINI>        0 3143075.3652    -369.8318   56303.1391       0.0200
+MINI INTERN>       31.03509    328.81518      0.05461    892.89736      0.00000
+MINI EXTERN>    45292.43857    297.66260      0.00000      0.00000      0.00000
+MINI IMAGES>   3103058.6040    -102.6190       0.0000       0.0000       0.0000
+MINI EWALD>      16586.2674-3687919.7545 3664240.1321       0.0000       0.0000
+MINI CONSTR>      369.83178      0.00000      0.00000      0.00000      0.00000
+ ----------       ---------    ---------    ---------    ---------    ---------

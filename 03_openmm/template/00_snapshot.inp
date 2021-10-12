@@ -1,0 +1,29 @@
+**
+*
+
+! Read parameters
+set toppar ../toppar_drude
+stream @toppar/toppar_drude_master_protein_2019f.str
+stream @toppar/toppar_drude_nucleic_acid_2017c.str
+stream @toppar/toppar_drude_lipid_2017c.str
+stream @toppar/toppar_drude_model_2018d.str
+
+ioformat exten
+
+read psf  card name ../pot_dmpl_64.psf
+read coor card name ../pot_dmpl_64.1.crd
+
+open read unit 50 file name ./pot_dmpl_64.test.1.dcd
+read coor file ifile 1000 unit 50
+
+coor stat
+
+stop
+coor trans xdir -?XAVE ydir -?YAVE zdir -?ZAVE
+
+coor stat
+
+write coor card name pot_dmpl_64.1-ns.crd
+write coor pdb name pot_dmpl_64.1-ns.pdb
+
+stop

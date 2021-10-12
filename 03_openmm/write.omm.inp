@@ -1,0 +1,36 @@
+*  translate coor to first quadrant for OpenMM+Plumed
+*  akognole 2019 
+*
+
+set out = @ion_@mol_@conc
+
+set toppar ../../toppar_drude
+stream @toppar/toppar_drude_master_protein_2020b.str
+stream @toppar/toppar_drude_nucleic_acid_2020b.str
+stream @toppar/toppar_drude_lipid_2020b.str
+stream @toppar/toppar_drude_model_2020b.str
+
+read psf card name ../@out.psf
+read coor card name ../@out.mini.crd
+
+coor stat
+
+coor trans xdir -?XMIN ydir -?YMIN zdir -?ZMIN
+
+coor stat
+
+calc A = ?XMAX - ?XMIN
+calc B = ?YMAX - ?YMIN
+calc C = ?ZMAX - ?ZMIN
+
+open  write unit 90 card name system.str
+write title unit 90
+* set A = @A
+* set B = @B
+* set C = @C
+*
+
+write coor card name ./template/@out.omm.crd
+write coor pdb name ./template/@out.omm.pdb
+
+stop

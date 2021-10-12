@@ -1,0 +1,20 @@
+* Write psf with no water
+*
+
+set out @ion_@mol_@conc
+
+stream ../toppar.str
+stream ./toppar_drude/toppar_drude_master_protein_2020b.str
+stream ./toppar_drude/toppar_drude_nucleic_acid_2020b.str
+stream ./toppar_drude/toppar_drude_lipid_2020b.str
+stream ./toppar_drude/toppar_drude_model_2020b.str
+
+read psf xplor card name ./@out.xplor.psf
+read coor card name ./@out.omm.crd
+
+delete atom sele resname SWM4 end
+write psf xplor card name @out.nowater.xplor.psf
+write coor pdb name @out.nowater.omm.pdb
+delete atom sele all end
+
+stop

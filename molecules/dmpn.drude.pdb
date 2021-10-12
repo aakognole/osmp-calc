@@ -1,0 +1,22 @@
+ATOM      1  P   DMPN    1      -0.489   0.511  -0.250  1.00  0.00      DMPN
+ATOM      2  DP  DMPN    1      -0.489   0.511  -0.250  1.00  0.00      DMPN
+ATOM      3  O13 DMPN    1      -1.064   1.536   0.668  1.00  0.00      DMPN
+ATOM      4 DO13 DMPN    1      -1.056   1.523   0.660  1.00  0.00      DMPN
+ATOM      5  O14 DMPN    1      -0.750   0.559  -1.717  1.00  0.00      DMPN
+ATOM      6 DO14 DMPN    1      -0.745   0.555  -1.701  1.00  0.00      DMPN
+ATOM      7  O11 DMPN    1       1.069   0.492  -0.036  1.00  0.00      DMPN
+ATOM      8 DO11 DMPN    1       1.049   0.487  -0.041  1.00  0.00      DMPN
+ATOM      9  O12 DMPN    1      -0.930  -0.906   0.273  1.00  0.00      DMPN
+ATOM     10 DO12 DMPN    1      -0.920  -0.887   0.270  1.00  0.00      DMPN
+ATOM     11  C1  DMPN    1       1.754   1.685  -0.433  1.00  0.00      DMPN
+ATOM     12  DC1 DMPN    1       1.879   1.725  -0.432  1.00  0.00      DMPN
+ATOM     13  H11 DMPN    1       1.390   2.559   0.149  1.00  0.00      DMPN
+ATOM     14  H12 DMPN    1       1.606   1.881  -1.517  1.00  0.00      DMPN
+ATOM     15  H13 DMPN    1       2.842   1.567  -0.244  1.00  0.00      DMPN
+ATOM     16  C2  DMPN    1      -2.334  -1.176   0.196  1.00  0.00      DMPN
+ATOM     17  DC2 DMPN    1      -2.411  -1.277   0.227  1.00  0.00      DMPN
+ATOM     18  H21 DMPN    1      -2.686  -1.130  -0.857  1.00  0.00      DMPN
+ATOM     19  H22 DMPN    1      -2.909  -0.443   0.804  1.00  0.00      DMPN
+ATOM     20  H23 DMPN    1      -2.537  -2.194   0.590  1.00  0.00      DMPN
+TER
+END

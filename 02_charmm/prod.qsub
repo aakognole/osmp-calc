@@ -1,0 +1,17 @@
+#$ -S /bin/sh
+#$ -cwd
+#$ -V
+#$ -o jobout
+#$ -j y
+#$ -N osmp
+#$ -l h_data=500M,h_rt=960:00:00
+#$ -pe mpirun1 8
+#$ -R y
+
+echo $HOSTNAME $JOB_ID `date`
+
+ulimit -c 4
+charmm=/opt/mackerell/apps/charmm/parallel/c44b2-parallel
+mpirun="mpirun --leave-session-attached"
+
+$mpirun $charmm -i charmm_mini.inp ion=mg mol=dmp conc=0.125 > charmm_mini.out
