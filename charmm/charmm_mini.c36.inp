@@ -10,7 +10,7 @@ stream toppar_c36.str
 open read unit 10 card name ../run_@ion_@mol/@ion_@mol_@conc.c36.psf
 read psf  unit 10 card
 
-open read unit 10 card name ../run_@ion_@mol/@ion_@mol_@conc.crd
+open read unit 10 card name ../run_@ion_@mol/@ion_@mol_@conc.c36.crd
 read coor unit 10 card
 
 SET XTLTYPE  = ORTHO
@@ -20,9 +20,9 @@ SET C = 96
 SET ALPHA = 90.0
 SET BETA  = 90.0
 SET GAMMA = 90.0
-SET FFTX  = 60
-SET FFTY  = 60
-SET FFTZ  = 120
+SET FFTX  = 54
+SET FFTY  = 54
+SET FFTZ  = 108
 SET XCEN  = 0
 SET YCEN  = 0
 SET ZCEN  = 0
