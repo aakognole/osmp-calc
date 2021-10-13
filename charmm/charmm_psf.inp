@@ -1,0 +1,19 @@
+* create psf file
+* 
+
+! Read topology and parameter files
+stream toppar_drude.str
+
+read sequence @ion @nion
+generate @ion first none last none setup warn drude dmass 0.4
+
+read sequence @mol @nmol
+generate @mol first none last none setup warn drude dmass 0.4
+
+read sequence SWM4 @nwater
+generate BULK first none last none setup warn noangle nodihedral drude dmass 0.4
+
+write psf card name ../run_@ion_@mol/@ion_@mol_@conc.psf
+write psf xplor card name ../run_@ion_@mol/@ion_@mol_@conc.xplor.psf
+
+stop

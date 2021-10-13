@@ -1,0 +1,95 @@
+* minimize drude particles
+*
+
+dimension maxres 2000000 maxaim 12000000 maxgrp 2000000
+
+! Read topology and parameter files
+stream toppar_c36.str
+
+! Read PSF and Coordinates
+open read unit 10 card name ../run_@ion_@mol/@ion_@mol_@conc.c36.psf
+read psf  unit 10 card
+
+open read unit 10 card name ../run_@ion_@mol/@ion_@mol_@conc.crd
+read coor unit 10 card
+
+SET XTLTYPE  = ORTHO
+SET A = 48
+SET B = 48
+SET C = 96
+SET ALPHA = 90.0
+SET BETA  = 90.0
+SET GAMMA = 90.0
+SET FFTX  = 60
+SET FFTY  = 60
+SET FFTZ  = 120
+SET XCEN  = 0
+SET YCEN  = 0
+SET ZCEN  = 0
+
+!open read unit 10 card name crystal_image.str
+CRYSTAL DEFINE @XTLtype @A @B @C @alpha @beta @gamma
+crystal build noper 0 cutoff 16.0
+!CRYSTAL READ UNIT 10 CARD
+!CRYSTAL BUILD CUTOFF 14.0
+
+!Image centering by residue
+IMAGE BYRESID XCEN @xcen YCEN @ycen ZCEN @zcen sele resname @ion .or. resname @mol end
+IMAGE BYRESID XCEN @xcen YCEN @ycen ZCEN @zcen sele resname swm4 end
+
+!
+! Nonbonded Options
+!
+
+nbonds atom vatom vfswitch bycb -
+       ctonnb 10.0 ctofnb 12.0 cutnb 16.0 cutim 16.0 -
+       inbfrq -1 imgfrq -1 wmin 1.0 cdie eps 1.0 -
+       ewald pmew fftx @fftx ffty @ffty fftz @fftz  kappa .34 spline order 6
+energy
+
+mini SD   nstep 50 nprint 10
+mini ABNR nstep 100 nprint 50
+
+shake bonh param fast
+
+write coor pdb name ../run_@ion_@mol/@ion_@mol_@conc.mini.c36.pdb
+write coor card name ../run_@ion_@mol/@ion_@mol_@conc.mini.c36.crd
+
+!stop
+
+set temp  = 298.15
+
+! Run equilibration and Output for equilibration
+! -------------------------------------------------
+open unit 20 write unform name ../run_@ion_@mol/@ion_@mol_@conc.c36.dcd
+open unit 22 write form name ../run_@ion_@mol/@ion_@mol_@conc.c36.res
+
+DYNA VVER start timestep 0.001 nstep 500 -
+     nprint 100 iprfrq 100 ntrfrq 100 -
+     iunread -1 iunwri 22 iuncrd 20 iunvel -1 kunit -1 -
+     nsavc 0 nsavv 0 -
+     nose rstn tref @temp qref 50 ncyc 10 firstt @temp
+
+! Run Dynamics Loop
+! -----------------------------------
+
+! estimate Pmass from SYSmass (total system mass)
+! [there could be problems with exreme values, such as  Pmass << SYSmass or Pmass >> SYSmass
+scalar mass stat
+calc Pmass = int ( ?stot  /  50.0 )
+
+open unit 20 write unform name ../run_@ion_@mol/@ion_@mol_@conc.equi.c36.dcd
+open unit 22 write form name ../run_@ion_@mol/@ion_@mol_@conc.equi.c36.res
+open unit 23 read form name ../run_@ion_@mol/@ion_@mol_@conc.c36.res
+
+DYNA CPT leap restart time 0.002 nstep 1000 -
+     nprint 500 iprfrq 500 ntrfrq 500 -
+     iunread 23 iunwri 22 iuncrd 20 iunvel -1 kunit -1 -
+     nsavc 100 nsavv 0 -
+     PCONSTANT pref 1.0 pmzz @Pmass pmxx 0.0 pmyy 0.0 pgamma   20.0 -
+     HOOVER    reft @temp  tmass 2000.0  tbath   @temp  firstt @temp
+
+write coor pdb name ../run_@ion_@mol/@ion_@mol_@conc.equi.c36.pdb
+write coor card name ../run_@ion_@mol/@ion_@mol_@conc.equi.c36.crd
+
+stop

@@ -1,0 +1,52 @@
+* calculate molecule volume in charmm
+* 
+
+ioformat extended
+
+set resi @resi
+
+! Read topology and parameter files
+stream toppar.str
+
+!non-bond parameters
+set 3 999.0  ! cutim
+set 4 999.0  ! cutnb
+set 5 980.0  ! ctonnb
+set 6 990.0  ! ctofnb
+
+read sequence card
+* @resi
+*
+1
+@resi
+generate @resi first none last none setup warn
+
+open read card unit 21 name ../molecules/@resi.c36.pdb
+read coor pdb unit 21
+
+nbonds atom vatom vfswitch bycb -
+       ctonnb @5 ctofnb @6 cutnb @4 cutim 16.0 -
+       inbfrq -1 imgfrq -1 wmin 1.0 cdie eps 1.0 -
+
+!update cdie inbfrq -1 ihbfrq 0 -
+!@7 @8 @9 vswitch cutnb @4 ctofnb @6 ctonnb @5
+
+MINI SD nstep 1000 tolgrd 0.01 step 0.01 nprint 50  tolenr -1.0
+MINI ABNR nstep 2000 tolgrd 0.00001 step 0.02 tolenr -1.0 nprint 50 !
+
+energy
+set wele ?elec
+set wvdw ?vdw
+set wener ?ener
+
+! Setup coor volume scalar arrays
+scalar radi store 1
+scalar wmain set 1.0
+scalar wmain store 2
+coor volu space 1000 sele all end
+
+write title unit 99
+* ?VOLUME
+*
+
+stop
