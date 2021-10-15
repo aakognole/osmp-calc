@@ -1,0 +1,15 @@
+
+# Run calculations using: drude OR c36 OR both 
+method=drude
+
+# Enter residue name for first molecule 
+mol1=mg
+
+# Enter residue name for second molecule 
+mol2=cla
+
+# Enter ratio e.g. for MgCl2 enter >>> 1 2 
+ratio="1 2"
+
+# Enter concentrations (in M) you want separated by space e.g. 0.125 0.25 0.5 1 
+concs="0.125 0.25 0.5 1"
