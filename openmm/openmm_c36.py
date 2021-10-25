@@ -15,12 +15,14 @@ from glob import glob
 
 jobname = str(argv[1])+'_'+str(argv[2])+'_'+str(argv[3])
 
-psf = app.CharmmPsfFile('./'+jobname+'.xplor.psf')
+psf = app.CharmmPsfFile('../'+jobname+'.xplor.psf')
 crd = app.CharmmCrdFile('./'+jobname+'.omm.crd')
+
+# Need to modify
 
 psf.setBox(4.8*nanometer,4.8*nanometer,9.6*nanometer)
 
-toppar = glob('../../toppar/toppar_drude/*str')
+toppar = glob('../../toppar/toppar_c36/*')
 params = app.CharmmParameterSet(toppar)
 
 system = psf.createSystem(params,  nonbondedMethod=ff.PME,

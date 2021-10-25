@@ -5,8 +5,9 @@ if [ -e setenv ]; then source setenv; else ./setenv.sh; fi
 
 update_inputs () {
     printf "\n# Run calculations using: drude OR c36 OR both \n" > inputs
-    printf "\nRun calculations using: drude OR c36 OR both \n>>> "
-    read method; echo "method=${method}" >> inputs
+    #printf "\nRun calculations using: drude OR c36 OR both \n>>> "
+    #read method; echo "method=${method}" >> inputs
+    method=drude; echo "method=${method}" >> inputs
     printf "\n# Enter residue name for first molecule \n" >> inputs
     printf "\nEnter residue name for first molecule \n>>> "
     read mol1; echo "mol1=${mol1}" >> inputs
@@ -63,7 +64,8 @@ for i in $(seq 0 $nconc);do
     nmol=`echo ${conc[$i]} | awk '{printf "%d", 6*0.0001*(48*48*96)*$1}'`
     nmol1[$i]=`echo ${nmol} ${nmols[0]} | awk '{printf "%d", $1*$2}'`
     nmol2[$i]=`echo ${nmol} ${nmols[1]} | awk '{printf "%d", $1*$2}'`
-    nwat[$i]=$waters
+    #nwat[$i]=$waters
+    nwat[$i]=`echo ${waters} ${nmol1[$i]} ${nmol2[$i]} | awk '{printf "%d",$1-$2-$3}'`
     #nwat[$i]=`echo ${nmol1[$i]} ${nmol2[$i]} $waters ${v_mol1} ${v_mol2} ${v_wat} | awk '{printf "%d", $3-((($4*$1)+($5*$2))/($6))}'`
     echo ">>> For ${conc[$i]} M solution: ${nmol1[$i]} ${mol1}, ${nmol2[$i]} ${mol2} and ${nwat[$i]} waters."
 done
@@ -80,8 +82,8 @@ for i in $(seq 0 $nconc);do
 	sed -e "s~OPDB~${outpdb}~g" -e "s~OCRD~${outcrd}~g" -e "s~III~${mol1}~g" \
 	    -e "s~MMM~${mol2}~g" -e "s~N_I~${nmol1[$i]}~g" -e "s~N_M~${nmol2[$i]}~g" \
 	    -e "s~N_W~${nwat[$i]}~g" packmol.tmpl > ${dir}/packmol.${mol1}.${mol2}.${conc[$i]}.inp
-#	${packmol} < ${dir}/packmol.${mol1}.${mol2}.${conc[$i]}.inp > ${dir}/packmol.${mol1}.${mol2}.${conc[$i]}.out
-#	${convpdb} -renumber 1 -crdext ${outpdb} > ${outcrd}
+	${packmol} < ${dir}/packmol.${mol1}.${mol2}.${conc[$i]}.inp > ${dir}/packmol.${mol1}.${mol2}.${conc[$i]}.out
+	${convpdb} -renumber 1 -crdext ${outpdb} > ${outcrd}
     elif [ $method == "drude" ] || [ $method == "both" ]; then
 	printf " c36..."
 	outpdb="${dir}/${mol1}_${mol2}_${conc[$i]}.c36.pdb"
@@ -105,13 +107,13 @@ for i in $(seq 0 $nconc);do
     printf ">>> ${conc[$i]} M ..."
     if [ $method == "drude" ] || [ $method == "both" ]; then
 	printf " drude..."
-#	${CHARMMDIR}/charmm -i charmm_psf.inp ion=${mol1} mol=${mol2} nion=${nmol1[$i]} nmol=${nmol2[$i]} nwater=${nwat[$i]} conc=${conc[$i]} >> ${dir}/charmm.out
-#	${CHARMMDIR}/charmm -i charmm_mini.inp ion=${mol1} mol=${mol2} conc=${conc[$i]} > ${dir}/charmm_mini.${mol1}_${mol2}_${conc[$i]}.out
-#	${CHARMMDIR}/charmm -i write.omm.inp mol1=${mol1} mol2=${mol2} conc=${conc[$i]} > ${dir}/drude_at_${conc[$i]}/write.omm.out
+	${CHARMMDIR}/charmm -i charmm_psf.inp mol1=${mol1} mol2=${mol2} nmol1=${nmol1[$i]} nmol2=${nmol2[$i]} nwater=${nwat[$i]} conc=${conc[$i]} >> ${dir}/charmm.out
+	${CHARMMDIR}/charmm -i charmm_mini.inp mol1=${mol1} mol2=${mol2} conc=${conc[$i]} > ${dir}/charmm_mini.${mol1}_${mol2}_${conc[$i]}.out
+	${CHARMMDIR}/charmm -i write.omm.inp mol1=${mol1} mol2=${mol2} conc=${conc[$i]} > ${dir}/drude_at_${conc[$i]}/write.omm.out
     elif [ $method == "c36" ] || [ $method == "both" ]; then
 	printf " c36..."
-#	${CHARMMDIR}/charmm -i charmm_psf.c36.inp ion=${mol1} mol=${mol2} nion=${nmol1[$i]} nmol=${nmol2[$i]} nwater=${nwat[$i]} conc=${conc[$i]} >> ${dir}/charmm.c36.out
-#	${CHARMMDIR}/charmm -i charmm_mini.c36.inp ion=${mol1} mol=${mol2} conc=${conc[$i]} > ${dir}/charmm_mini.${mol1}_${mol2}_${conc[$i]}.c36.out
+#	${CHARMMDIR}/charmm -i charmm_psf.c36.inp mol1=${mol1} mol2=${mol2} nmol1=${nmol1[$i]} nmol2=${nmol2[$i]} nwater=${nwat[$i]} conc=${conc[$i]} >> ${dir}/charmm.c36.out
+#	${CHARMMDIR}/charmm -i charmm_mini.c36.inp mol1=${mol1} mol2=${mol2} conc=${conc[$i]} > ${dir}/charmm_mini.${mol1}_${mol2}_${conc[$i]}.c36.out
 #       ${CHARMMDIR}/charmm -i write.omm.c36.inp mol1=${mol1} mol2=${mol2} conc=${conc[$i]} > ${dir}/c36_at_${conc[$i]}/write.omm.out
     fi
     printf " done!\n"
@@ -128,7 +130,7 @@ for i in $(seq 0 $nconc);do
 	cp -rfp openmm/* ${dir2}/
 	cd ${dir2}
 	${PYTHONDIR}/python atoms_for_plumed.py ${mol1} ${mol2} ${conc[$i]} 2>> ${cwd}/error.out
-	sed -i -e "s~<mol1>~${mol1}~g" -e "s~<mol2>~${mol2}~g" -e "s~<CONC>~${conc[$i]}~g" sub.sh 2>> ${cwd}/error.out
+	sed -i -e "s~<mol1>~${mol1}~g" -e "s~<mol2>~${mol2}~g" -e "s~<CONC>~${conc[$i]}~g" run.sh 2>> ${cwd}/error.out
 	cd ${cwd}; printf " done!\n"
     elif [ $method == "c36" ] || [ $method == "both" ]; then
         printf " c36..."
@@ -136,7 +138,7 @@ for i in $(seq 0 $nconc);do
         cp -rfp openmm/* ${dir2}/
         cd ${dir2}
         ${PYTHONDIR}/python atoms_for_plumed.py ${mol1} ${mol2} ${conc[$i]} 2>> ${cwd}/error.out
-        sed -i -e "s~<mol1>~${mol1}~g" -e "s~<mol2>~${mol2}~g" -e "s~<CONC>~${conc[$i]}~g" sub.sh 2>> ${cwd}/error.out
+        sed -i -e "s~<mol1>~${mol1}~g" -e "s~<mol2>~${mol2}~g" -e "s~<CONC>~${conc[$i]}~g" run.sh 2>> ${cwd}/error.out
         cd ${cwd}; printf " done!\n"
     fi
 done

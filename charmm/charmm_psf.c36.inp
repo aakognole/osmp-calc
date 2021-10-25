@@ -4,16 +4,16 @@
 ! Read topology and parameter files
 stream toppar.str
 
-read sequence @ion @nion
-generate @ion first none last none setup warn
+read sequence @mol1 @nmol1
+generate @mol1 first none last none setup warn
 
-read sequence @mol @nmol
-generate @mol first none last none setup warn
+read sequence @mol2 @nmol2
+generate @mol2 first none last none setup warn
 
 read sequence TIP3 @nwater
 generate BULK first none last none setup warn noangle nodihedral
 
-write psf card name ../run_@ion_@mol/@ion_@mol_@conc.c36.psf
-write psf xplor card name ../run_@ion_@mol/@ion_@mol_@conc.c36.xplor.psf
+write psf card name ../run_@mol1_@mol2/@mol1_@mol2_@conc.c36.psf
+write psf xplor card name ../run_@mol1_@mol2/@mol1_@mol2_@conc.c36.xplor.psf
 
 stop

@@ -7,10 +7,10 @@ dimension maxres 2000000 maxaim 12000000 maxgrp 2000000
 stream toppar_drude.str
 
 ! Read PSF and Coordinates
-open read unit 10 card name ../run_@ion_@mol/@ion_@mol_@conc.psf
+open read unit 10 card name ../run_@mol1_@mol2/@mol1_@mol2_@conc.psf
 read psf  unit 10 card
 
-open read unit 10 card name ../run_@ion_@mol/@ion_@mol_@conc.crd
+open read unit 10 card name ../run_@mol1_@mol2/@mol1_@mol2_@conc.crd
 read coor unit 10 card
 
 coor sdrude
@@ -22,7 +22,7 @@ SHAKE bonh param tolerance 1.0e-9 nofast -
 
 SET XTLTYPE  = ORTHO
 SET A = 48
-SET B = 48
+SET B = @A
 SET C = 96
 SET ALPHA = 90.0
 SET BETA  = 90.0
@@ -36,14 +36,11 @@ SET ZCEN  = 0
 
 coor stat
 
-!open read unit 10 card name crystal_image.str
 CRYSTAL DEFINE @XTLtype @A @B @C @alpha @beta @gamma
 crystal build noper 0 cutoff 16.0
-!CRYSTAL READ UNIT 10 CARD
-!CRYSTAL BUILD CUTOFF 14.0
 
 !Image centering by residue
-IMAGE BYRESID XCEN @xcen YCEN @ycen ZCEN @zcen sele resname @ion .or. resname @mol end
+IMAGE BYRESID XCEN @xcen YCEN @ycen ZCEN @zcen sele resname @mol1 .or. resname @mol2 end
 IMAGE BYRESID XCEN @xcen YCEN @ycen ZCEN @zcen sele resname swm4 end
 
 nbonds atom vatom switch vswitch -
@@ -53,20 +50,24 @@ nbonds atom vatom switch vswitch -
 
 energy
 
-! first minimize drudes, then entire system
+! first minimize drudes
 cons harm force 10000000. sele .not. type D* end
 mini SD   nstep 50 nprint 10
-!mini ABNR nstep 100 nprint 20
+cons harm force 0.0 sele all end
+
+cons harm force 10000000. sele .not. ( type D* .or. resname SWM4 ) end
+mini SD   nstep 50 nprint 10
 cons harm force 0.0 sele all end
 
 ! minimize all atoms and drudes
 mini SD   nstep 100 nprint 10
-!mini ABNR nstep 50
 
-write coor pdb name ../run_@ion_@mol/@ion_@mol_@conc.mini.pdb
-write coor card name ../run_@ion_@mol/@ion_@mol_@conc.mini.crd
+write coor pdb name ../run_@mol1_@mol2/@mol1_@mol2_@conc.mini.pdb
+write coor card name ../run_@mol1_@mol2/@mol1_@mol2_@conc.mini.crd
 
-set temp  = 298.15
+stop
+
+set temp  = 303.15
 DrudeHardWall L_WALL 0.2
 
 ! TPcontrol
@@ -78,8 +79,8 @@ TPCONTROL NTHER 2  CMDAMP 10.0  NSTEP 20  -
       
 ! Run equilibration and Output for equilibration
 ! -------------------------------------------------
-open unit 20 write unform name ../run_@ion_@mol/@ion_@mol_@conc.equi.dcd
-open unit 22 write form name ../run_@ion_@mol/@ion_@mol_@conc.equi.res
+open unit 20 write unform name ../run_@mol1_@mol2/@mol1_@mol2_@conc.equi.dcd
+open unit 22 write form name ../run_@mol1_@mol2/@mol1_@mol2_@conc.equi.res
 
 DYNAMICS  vv2      start    timestep 0.0005 nstep 2000 -
 	  ntrfrq    500   iprfrq   -1  -
@@ -90,7 +91,7 @@ DYNAMICS  vv2      start    timestep 0.0005 nstep 2000 -
           iunwrite    22  -
           iuncrd      20     nsavcrd   500
 
-write coor pdb name ../run_@ion_@mol/@ion_@mol_@conc.equi.pdb
-write coor card name ../run_@ion_@mol/@ion_@mol_@conc.equi.crd
+write coor pdb name ../run_@mol1_@mol2/@mol1_@mol2_@conc.mini.pdb
+write coor card name ../run_@mol1_@mol2/@mol1_@mol2_@conc.mini.crd
 
 stop

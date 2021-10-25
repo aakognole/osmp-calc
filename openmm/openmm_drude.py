@@ -15,13 +15,13 @@ from glob import glob
 
 jobname = str(argv[1])+'_'+str(argv[2])+'_'+str(argv[3])
 
-psf = app.CharmmPsfFile('./'+jobname+'.xplor.psf')
+psf = app.CharmmPsfFile('../'+jobname+'.xplor.psf')
 crd = app.CharmmCrdFile('./'+jobname+'.omm.crd')
 
 psf.setBox(4.8*nanometer,4.8*nanometer,9.6*nanometer)
 
-toppar = glob('../../toppar/toppar_drude/*str')
-params = app.CharmmParameterSet(toppar)
+toppar = glob('../../toppar/toppar_drude/toppar_drude*str')
+params = app.CharmmParameterSet(*toppar)
 
 system = psf.createSystem(params,  nonbondedMethod=ff.PME,
                           nonbondedCutoff=1.2*nanometer,
@@ -29,7 +29,7 @@ system = psf.createSystem(params,  nonbondedMethod=ff.PME,
                           ewaldErrorTolerance = 0.0001,
                           constraints=ff.HBonds)
 
-system.addForce(mm.MonteCarloBarostat(1*bar, 298*kelvin))
+#system.addForce(mm.MonteCarloBarostat(1*bar, 298*kelvin))
 
 script = plumedscript()
 system.addForce(PlumedForce(script))
@@ -53,7 +53,7 @@ else:
     with open(jobname+'.'+str(start-1)+'.chk', 'rb') as f:
         simulation.context.loadCheckpoint(f.read())
 
-nsavcrd = 1000      # save frames every 1 ps
+nsavcrd = 500       # save frames every 0.5 ps
 nstep   = 10000000  # simulate every 10 ns
 nprint  = 10000     # report every 10 ps
 

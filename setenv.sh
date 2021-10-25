@@ -16,7 +16,7 @@ else
     printf "Enter path to charmm binary i.e. \${CHARMMDIR}/charmm\n>>> "
 fi
 read rep; if [ $rep ]; then charmmdir=${rep}; else charmmdir=${charmm:0:-7}; fi
-echo -e "* temp\n*\n\nstop" > tempi; $charmmdir/charmm < tempi > tempo; C=`grep CHARMM tempout | wc -l`
+echo -e "* temp\n*\n\nstop" > tempi; $charmmdir/charmm < tempi > tempo; C=`grep CHARMM tempo | wc -l`
 if [ $C == 3 ]; then
     export CHARMMDIR=${charmmdir}; echo -e "export CHARMMDIR=${charmmdir}" >> setenv
 else

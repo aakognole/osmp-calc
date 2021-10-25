@@ -7,15 +7,15 @@ dimension maxres 2000000 maxaim 12000000 maxgrp 2000000
 stream toppar_c36.str
 
 ! Read PSF and Coordinates
-open read unit 10 card name ../run_@ion_@mol/@ion_@mol_@conc.c36.psf
+open read unit 10 card name ../run_@mol1_@mol2/@mol1_@mol2_@conc.c36.psf
 read psf  unit 10 card
 
-open read unit 10 card name ../run_@ion_@mol/@ion_@mol_@conc.c36.crd
+open read unit 10 card name ../run_@mol1_@mol2/@mol1_@mol2_@conc.c36.crd
 read coor unit 10 card
 
 SET XTLTYPE  = ORTHO
 SET A = 48
-SET B = 48
+SET B = @A
 SET C = 96
 SET ALPHA = 90.0
 SET BETA  = 90.0
@@ -27,15 +27,12 @@ SET XCEN  = 0
 SET YCEN  = 0
 SET ZCEN  = 0
 
-!open read unit 10 card name crystal_image.str
 CRYSTAL DEFINE @XTLtype @A @B @C @alpha @beta @gamma
 crystal build noper 0 cutoff 16.0
-!CRYSTAL READ UNIT 10 CARD
-!CRYSTAL BUILD CUTOFF 14.0
 
 !Image centering by residue
-IMAGE BYRESID XCEN @xcen YCEN @ycen ZCEN @zcen sele resname @ion .or. resname @mol end
-IMAGE BYRESID XCEN @xcen YCEN @ycen ZCEN @zcen sele resname swm4 end
+IMAGE BYRESID XCEN @xcen YCEN @ycen ZCEN @zcen sele resname @mol1 .or. resname @mol2 end
+IMAGE BYRESID XCEN @xcen YCEN @ycen ZCEN @zcen sele resname tip3 end
 
 !
 ! Nonbonded Options
@@ -52,8 +49,8 @@ mini ABNR nstep 100 nprint 50
 
 shake bonh param fast
 
-write coor pdb name ../run_@ion_@mol/@ion_@mol_@conc.mini.c36.pdb
-write coor card name ../run_@ion_@mol/@ion_@mol_@conc.mini.c36.crd
+write coor pdb name ../run_@mol1_@mol2/@mol1_@mol2_@conc.mini.c36.pdb
+write coor card name ../run_@mol1_@mol2/@mol1_@mol2_@conc.mini.c36.crd
 
 !stop
 
@@ -61,8 +58,8 @@ set temp  = 298.15
 
 ! Run equilibration and Output for equilibration
 ! -------------------------------------------------
-open unit 20 write unform name ../run_@ion_@mol/@ion_@mol_@conc.c36.dcd
-open unit 22 write form name ../run_@ion_@mol/@ion_@mol_@conc.c36.res
+open unit 20 write unform name ../run_@mol1_@mol2/@mol1_@mol2_@conc.c36.dcd
+open unit 22 write form name ../run_@mol1_@mol2/@mol1_@mol2_@conc.c36.res
 
 DYNA VVER start timestep 0.001 nstep 500 -
      nprint 100 iprfrq 100 ntrfrq 100 -
@@ -78,9 +75,9 @@ DYNA VVER start timestep 0.001 nstep 500 -
 scalar mass stat
 calc Pmass = int ( ?stot  /  50.0 )
 
-open unit 20 write unform name ../run_@ion_@mol/@ion_@mol_@conc.equi.c36.dcd
-open unit 22 write form name ../run_@ion_@mol/@ion_@mol_@conc.equi.c36.res
-open unit 23 read form name ../run_@ion_@mol/@ion_@mol_@conc.c36.res
+open unit 20 write unform name ../run_@mol1_@mol2/@mol1_@mol2_@conc.mini.c36.dcd
+open unit 22 write form name ../run_@mol1_@mol2/@mol1_@mol2_@conc.mini.c36.res
+open unit 23 read form name ../run_@mol1_@mol2/@mol1_@mol2_@conc.c36.res
 
 DYNA CPT leap restart time 0.002 nstep 1000 -
      nprint 500 iprfrq 500 ntrfrq 500 -
@@ -89,7 +86,7 @@ DYNA CPT leap restart time 0.002 nstep 1000 -
      PCONSTANT pref 1.0 pmzz @Pmass pmxx 0.0 pmyy 0.0 pgamma   20.0 -
      HOOVER    reft @temp  tmass 2000.0  tbath   @temp  firstt @temp
 
-write coor pdb name ../run_@ion_@mol/@ion_@mol_@conc.equi.c36.pdb
-write coor card name ../run_@ion_@mol/@ion_@mol_@conc.equi.c36.crd
+write coor pdb name ../run_@mol1_@mol2/@mol1_@mol2_@conc.mini.c36.pdb
+write coor card name ../run_@mol1_@mol2/@mol1_@mol2_@conc.mini.c36.crd
 
 stop
