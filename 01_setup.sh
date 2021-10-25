@@ -58,10 +58,10 @@ echo -e "\n-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-
 #cd ..
 
 echo "Calculating compositions ..."
-waters=`echo "1" | awk '{printf "%d", 6*0.0001*(48*48*96)*55}'`
+waters=`echo "1" | awk '{printf "%d", 6.0221367*0.0001*(48*48*96)*55.5}'`
 declare -a nmol1; declare -a nmol2; declare -a nwat
 for i in $(seq 0 $nconc);do
-    nmol=`echo ${conc[$i]} | awk '{printf "%d", 6*0.0001*(48*48*96)*$1}'`
+    nmol=`echo ${conc[$i]} | awk '{printf "%d", 6.0221367*0.0001*(48*48*48)*$1}'`
     nmol1[$i]=`echo ${nmol} ${nmols[0]} | awk '{printf "%d", $1*$2}'`
     nmol2[$i]=`echo ${nmol} ${nmols[1]} | awk '{printf "%d", $1*$2}'`
     #nwat[$i]=$waters
