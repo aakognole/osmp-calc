@@ -31,7 +31,7 @@ f.close()
 f = open("plumed.py","a")
 f.write('    script = """\n')
 for i in g1.atoms.indices:
-    f.write("POSITION ATOM=%s LABEL=d%s\n" % (i+1,i+1))
+    f.write("POSITION ATOM=%s NOPBC LABEL=d%s\n" % (i+1,i+1))
 f.write('\n')
         
 upper="UPPER_WALLS "
@@ -44,13 +44,13 @@ upper=upper[:-1]+' '
 
 upper=upper+'KAPPA='
 for i in g1.atoms.indices:
-    upper=upper+"4184,"
+    upper=upper+"418.4,"
 
 upper=upper[:-1]+' '
 
 upper=upper+'EXP='
 for i in g1.atoms.indices:
-    upper=upper+"1,"
+    upper=upper+"2,"
 
 upper=upper[:-1]+' '
 
@@ -86,13 +86,13 @@ lower=lower[:-1]+' '
 
 lower=lower+'KAPPA='
 for i in g1.atoms.indices:
-    lower=lower+"4184,"
+    lower=lower+"418.4,"
 
 lower=lower[:-1]+' '
 
 lower=lower+'EXP='
 for i in g1.atoms.indices:
-    lower=lower+"1,"
+    lower=lower+"2,"
 
 lower=lower[:-1]+' '
 
