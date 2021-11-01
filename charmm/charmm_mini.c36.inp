@@ -44,6 +44,10 @@ nbonds atom vatom vfswitch bycb -
        ewald pmew fftx @fftx ffty @ffty fftz @fftz  kappa .34 spline order 6
 energy
 
+cons harm force 10000.0 sele .not. resname TIP3 end mass
+mini SD   nstep 50
+cons harm force 0.0 sele all end mass
+
 mini SD   nstep 50 nprint 10
 mini ABNR nstep 100 nprint 50
 
@@ -52,7 +56,7 @@ shake bonh param fast
 write coor pdb name ../run_@mol1_@mol2/@mol1_@mol2_@conc.mini.c36.pdb
 write coor card name ../run_@mol1_@mol2/@mol1_@mol2_@conc.mini.c36.crd
 
-!stop
+stop
 
 set temp  = 298.15
 

@@ -137,7 +137,7 @@ for i in $(seq 0 $nconc);do
         dir2="${cwd}/run_${mol1}_${mol2}/c36_at_${conc[$i]}"; mkdir -p ${dir2}
         cp -rfp openmm/* ${dir2}/
         cd ${dir2}
-        ${PYTHONDIR}/python atoms_for_plumed.py ${mol1} ${mol2} ${conc[$i]} 2>> ${cwd}/error.out
+        ${PYTHONDIR}/python atoms_for_plumed.c36.py ${mol1} ${mol2} ${conc[$i]} 2>> ${cwd}/error.out
         sed -i -e "s~<mol1>~${mol1}~g" -e "s~<mol2>~${mol2}~g" -e "s~<CONC>~${conc[$i]}~g" run.sh 2>> ${cwd}/error.out
         cd ${cwd}; printf " done!\n"
     fi

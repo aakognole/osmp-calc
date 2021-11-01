@@ -18,8 +18,6 @@ jobname = str(argv[1])+'_'+str(argv[2])+'_'+str(argv[3])
 psf = app.CharmmPsfFile('../'+jobname+'.xplor.psf')
 crd = app.CharmmCrdFile('./'+jobname+'.omm.crd')
 
-# Need to modify
-
 psf.setBox(4.8*nanometer,4.8*nanometer,9.6*nanometer)
 
 toppar = glob('../../toppar/toppar_c36/*')
@@ -31,18 +29,15 @@ system = psf.createSystem(params,  nonbondedMethod=ff.PME,
                           ewaldErrorTolerance = 0.0001,
                           constraints=ff.HBonds)
 
-system.addForce(mm.MonteCarloBarostat(1*bar, 298*kelvin))
+#system.addForce(mm.MonteCarloBarostat(1*bar, 298*kelvin)) # This is NVT ensemble, no pressure control
 
 script = plumedscript()
 system.addForce(PlumedForce(script))
 
-integrator = mm.DrudeLangevinIntegrator(303.15*kelvin, 5/picosecond, 1*kelvin, 20/picosecond,
-                                        0.001*picoseconds)
-integrator.setMaxDrudeDistance(0.02) # Drude Hardwall
+integrator = mm.LangevinIntegrator(303.15*kelvin, 5/picosecond, 0.001*picoseconds)
 
 simulation = app.Simulation(psf.topology, system, integrator)
 simulation.context.setPositions(crd.positions)
-simulation.context.computeVirtualSites()
 
 start, end  = 1, 2
 if start == 1:
@@ -55,7 +50,7 @@ else:
     with open(jobname+'.'+str(start-1)+'.chk', 'rb') as f:
         simulation.context.loadCheckpoint(f.read())
 
-nsavcrd = 1000      # save frames every 1 ps
+nsavcrd = 500       # save frames every 0.5 ps
 nstep   = 10000000  # simulate every 10 ns
 nprint  = 10000     # report every 10 ps
 

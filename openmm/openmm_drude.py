@@ -29,7 +29,7 @@ system = psf.createSystem(params,  nonbondedMethod=ff.PME,
                           ewaldErrorTolerance = 0.0001,
                           constraints=ff.HBonds)
 
-#system.addForce(mm.MonteCarloBarostat(1*bar, 298*kelvin))
+#system.addForce(mm.MonteCarloBarostat(1*bar, 298*kelvin)) # This is NVT ensemble, no pressure control
 
 script = plumedscript()
 system.addForce(PlumedForce(script))

@@ -4,7 +4,7 @@ from sys import argv
 from os.path import exists as file_exists
 
 mol1, mol2, conc = str(argv[1]), str(argv[2]), str(argv[3])
-pdb='../'+mol1+'_'+mol2+'_'+conc+'.mini.pdb'
+pdb='../'+mol1+'_'+mol2+'_'+conc+'.mini.c36.pdb'
 u = mda.Universe(pdb)
 
 if file_exists('../atom_selection.txt'):
