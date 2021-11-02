@@ -16,4 +16,7 @@ generate BULK first none last none setup warn noangle nodihedral
 write psf card name ../run_@mol1_@mol2/@mol1_@mol2_@conc.c36.psf
 write psf xplor card name ../run_@mol1_@mol2/@mol1_@mol2_@conc.c36.xplor.psf
 
+delete atom sele resn TIP3 end
+write psf card name ../run_@mol1_@mol2/@mol1_@mol2_@conc.c36.nowat.psf
+
 stop

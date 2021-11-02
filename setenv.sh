@@ -74,5 +74,27 @@ if [ ! -e $packmol ]; then
     fi
 fi
 
+nslots=`${PYTHONDIR}/python -c 'import multiprocessing as mp; print(mp.cpu_count())'`
+if [ $nslots ]; then
+    printf "Found $nslots cpu cores available for calculation \n"
+    printf "Press ENTER to continue or specify number \n>>> "
+else
+    printf "Enter number of cpu cores available for calculation \n>>> "
+fi
+read rep; if [ $rep ]; then nslots=${rep}; fi
+export NSLOTS=$nslots; echo -e "export NSLOTS=$nslots" >> setenv
+echo -e "\n-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-\n"
+
+diskclean=1
+if [ $diskclean ]; then
+    printf "Stripping water after calculation to reduce disk usage \n"
+    printf "Press ENTER to continue OR enter '0' to keep full trajectories \n>>> "
+else
+    printf "Enter number of cpu cores available for calculation \n>>> "
+fi
+read rep; if [ $rep ]; then diskclean=${rep}; fi
+export DISKCLEAN=$diskclean; echo -e "export DISKCLEAN=$diskclean" >> setenv
+echo -e "\n-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-\n"    
+
 source setenv
 exit

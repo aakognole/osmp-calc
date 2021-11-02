@@ -1,7 +1,7 @@
 #!/bin/bash
 
 cwd=`pwd`
-if [ -e setenv ]; then source setenv; else ./setenv.sh; fi
+if [ -e setenv ]; then source setenv; else ./setenv.sh; source setenv; fi
 
 update_inputs () {
     printf "\n# Run calculations using: drude OR c36 OR both \n" > inputs
@@ -130,7 +130,7 @@ for i in $(seq 0 $nconc);do
 	cp -rfp openmm/* ${dir2}/
 	cd ${dir2}
 	${PYTHONDIR}/python atoms_for_plumed.py ${mol1} ${mol2} ${conc[$i]} 2>> ${cwd}/error.out
-	sed -i -e "s~<mol1>~${mol1}~g" -e "s~<mol2>~${mol2}~g" -e "s~<CONC>~${conc[$i]}~g" run.sh 2>> ${cwd}/error.out
+	sed -i -e "s~<method>~drude~g" -e "s~<mol1>~${mol1}~g" -e "s~<mol2>~${mol2}~g" -e "s~<CONC>~${conc[$i]}~g" run.sh 2>> ${cwd}/error.out
 	cd ${cwd}; printf " done!\n"
     elif [ $method == "c36" ] || [ $method == "both" ]; then
         printf " c36..."
@@ -138,7 +138,7 @@ for i in $(seq 0 $nconc);do
         cp -rfp openmm/* ${dir2}/
         cd ${dir2}
         ${PYTHONDIR}/python atoms_for_plumed.c36.py ${mol1} ${mol2} ${conc[$i]} 2>> ${cwd}/error.out
-        sed -i -e "s~<mol1>~${mol1}~g" -e "s~<mol2>~${mol2}~g" -e "s~<CONC>~${conc[$i]}~g" run.sh 2>> ${cwd}/error.out
+        sed -i -e "s~<method>~c36~g" -e "s~<mol1>~${mol1}~g" -e "s~<mol2>~${mol2}~g" -e "s~<CONC>~${conc[$i]}~g" run.sh 2>> ${cwd}/error.out
         cd ${cwd}; printf " done!\n"
     fi
 done

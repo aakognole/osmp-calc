@@ -16,4 +16,7 @@ generate BULK first none last none setup warn noangle nodihedral drude dmass 0.4
 write psf card name ../run_@mol1_@mol2/@mol1_@mol2_@conc.psf
 write psf xplor card name ../run_@mol1_@mol2/@mol1_@mol2_@conc.xplor.psf
 
+delete atom sele resname SWM4 end
+write psf card name ../run_@mol1_@mol2/@mol1_@mol2_@conc.nowat.psf
+
 stop
