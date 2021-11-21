@@ -2,7 +2,7 @@
 * 
 
 ! Read topology and parameter files
-stream toppar.str
+stream toppar_c36.str
 
 read sequence @mol1 @nmol1
 generate @mol1 first none last none setup warn
