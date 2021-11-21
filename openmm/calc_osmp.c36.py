@@ -20,7 +20,7 @@ upperwall, lowerwall = 72.0, 24.0
 ftot, itot = 0, 0
 
 for run in range(1,4):
-    psf = '../'+sysname+'.nowat.psf'
+    psf = '../'+sysname+'.c36.nowat.psf'
     dcd = sysname+'.'+str(run)+'.nowat.dcd'
     u = mda.Universe(psf,dcd)
     atms = u.select_atoms('(%s) and resid 1'%(sele))

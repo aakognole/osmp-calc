@@ -22,7 +22,9 @@ crd = app.CharmmCrdFile('./'+jobname+'.omm.crd')
 
 psf.setBox(4.8*nanometer,4.8*nanometer,9.6*nanometer)
 
-toppar = glob('../../toppar/toppar_drude/toppar_drude*str')
+toppar = []
+for l in open('toppar_drude.str', 'r'):
+    toppar.append(str(l.strip()))
 params = app.CharmmParameterSet(*toppar)
 
 system = psf.createSystem(params,  nonbondedMethod=ff.PME,
@@ -46,7 +48,7 @@ simulation.context.computeVirtualSites()
 
 simulation.minimizeEnergy(maxIterations=20)
 
-nsavcrd = 500       # save frames every 0.1 ps
+nsavcrd = 500       # save frames every 0.5 ps
 nstep   = 10000000  # simulate every 10 ns
 nprint  = 10000     # report every 10 ps
 

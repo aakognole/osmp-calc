@@ -17,12 +17,14 @@ import MDAnalysis as mda
 jobname = str(argv[1])+'_'+str(argv[2])+'_'+str(argv[3])
 run = str(argv[4])
 
-psf = app.CharmmPsfFile('../'+jobname+'.xplor.psf')
+psf = app.CharmmPsfFile('../'+jobname+'.c36.xplor.psf')
 crd = app.CharmmCrdFile('./'+jobname+'.omm.crd')
 
 psf.setBox(4.8*nanometer,4.8*nanometer,9.6*nanometer)
 
-toppar = glob('../../toppar/toppar_c36/*')
+toppar = []
+for l in open('toppar_c36.str', 'r'):
+    toppar.append(str(l.strip()))
 params = app.CharmmParameterSet(*toppar)
 
 system = psf.createSystem(params,  nonbondedMethod=ff.PME,
@@ -36,7 +38,7 @@ system = psf.createSystem(params,  nonbondedMethod=ff.PME,
 script = plumedscript()
 system.addForce(PlumedForce(script))
 
-integrator = mm.DrudeLangevinIntegrator(298.15*kelvin, 5/picosecond, 0.001*picoseconds)
+integrator = mm.LangevinIntegrator(298.15*kelvin, 5/picosecond, 0.001*picoseconds)
 
 simulation = app.Simulation(psf.topology, system, integrator)
 simulation.context.setPositions(crd.positions)
@@ -69,10 +71,10 @@ with open(jobname+'.'+run+'.chk', 'wb') as f:
     f.write(simulation.context.createCheckpoint())
 
 # write trajectory stripping water
-u = mda.Universe('../'+jobname+'.psf',jobname+'.'+run+'.dcd')
+u = mda.Universe('../'+jobname+'.c36.xplor.psf',jobname+'.'+run+'.dcd')
 nowat = u.select_atoms('all and not resname SWM4 TIP3')
 nowatdcd = jobname+'.'+run+'.nowat.dcd'
-with MDAnalysis.Writer(nowatdcd, nowat.n_atoms) as W:
+with mda.Writer(nowatdcd, nowat.n_atoms) as W:
     for ts in u.trajectory:
         W.write(nowat)
 
