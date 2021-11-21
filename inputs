@@ -12,4 +12,4 @@ mol2=cla
 ratio="1 2"
 
 # Enter concentrations (in M) you want separated by space e.g. 0.125 0.25 0.5 1 
-concs="0.125 0.25 0.5 1"
+concs="0.25 0.5 1 1.5 2"

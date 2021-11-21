@@ -9,24 +9,33 @@ printf "\nPress ENTER to continue OR ctrl+C to cancel\n\n>>> "
 read rep
 
 cd run_${mol1}_${mol2}
+
 if [ ${method} == "drude" ] || [ ${method} == "both" ]; then
     for c in ${concs}; do
 	cd drude_at_$c
-	printf "\n>>> drude: $mol1 $mol2 $c \n"
-	cp -rfu ${cwd}/openmm/calc_osmp.py ./
-	if [ ! -e osmp.${mol1}_${mol2}_${c}.dat ]; then
+	rsync -auz ${cwd}/openmm/calc_osmp.py ./
+	if [ ! -e osmp.${mol1}_${mol2}_${c}.1.dat ]; then
+	    printf "\n>>> drude: $mol1 $mol2 $c ... "
 	    ${PYTHONDIR}/python calc_osmp.py $mol1 $mol2 $c
+	    printf "done!\n"
 	fi
-	tail -1 osmp.${mol1}_${mol2}_${c}.dat
 	cd ..; done
-elif [ ${method} == "c36" ] || [ ${method} == "both" ]; then
+    printf "\n"
+fi
+if [ ${method} == "c36" ] || [ ${method} == "both" ]; then
     for c in ${concs}; do
 	cd c36_at_$c
-	printf "\n>>> c36: $mol1 $mol2 $c \n"
-        cp -rfu ${cwd}/openmm/calc_osmp.py ./
-        if [ ! -e osmp.${mol1}_${mol2}_${c}.dat ]; then
-	    ${PYTHONDIR}/python calc_osmp.py $mol1 $mol2 $c
+        rsync -auz ${cwd}/openmm/calc_osmp.c36.py ./
+        if [ ! -e osmp.${mol1}_${mol2}_${c}.1.dat ]; then
+	    printf "\n>>> c36: $mol1 $mol2 $c ... "
+	    ${PYTHONDIR}/python calc_osmp.c36.py $mol1 $mol2 $c
+	    printf "done!\n"
 	fi
-	tail -1 osmp.${mol1}_${mol2}_${c}.dat
 	cd ..; done
+    printf "\n"
 fi
+
+rsync -auz ${cwd}/openmm/plot_osmp.py ./
+${PYTHONDIR}/python plot_osmp.py ${mol1} ${mol2}
+
+exit
